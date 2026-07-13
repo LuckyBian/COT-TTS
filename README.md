@@ -33,7 +33,7 @@ will be released progressively.
 
 ## Demo Page
 
-The demo page lives in [`web-demo/`](./web-demo). It is a fully static website
+The demo page lives in [`web-demo/`](https://luckybian.github.io/COTalker/index.html). It is a fully static website
 with a short project overview, architecture figures, representative COTalker
 examples, and a comparison table containing historical dialogue audio, target
 text, model names, and generated audio.
