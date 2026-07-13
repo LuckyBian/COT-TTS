@@ -18,7 +18,7 @@ will be released progressively.
 | Challenge website | Released | [Website](https://iscslp2026-cot-tts.github.io/challenge-website/) |
 | Challenge dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
 | Challenge baseline | Released | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
-| Demo page source | Released | [`web-demo/`](https://luckybian.github.io/COTalker/index.html) |
+| Demo page source | Released | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
 
 ## Coming Soon
 
@@ -33,7 +33,7 @@ will be released progressively.
 
 ## Demo Page
 
-The demo page lives in [`web-demo/`](https://luckybian.github.io/COTalker/index.html). It is a fully static website
+The demo page lives in [Demo Page](https://luckybian.github.io/COTalker/index.html). It is a fully static website
 with a short project overview, architecture figures, representative COTalker
 examples, and a comparison table containing historical dialogue audio, target
 text, model names, and generated audio.
