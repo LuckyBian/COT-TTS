@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COT-TTS Demo Gallery</title>
+    <title>COTalker Demo Gallery</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="hero">
       <div>
-        <p class="eyebrow">COT-TTS listening demo</p>
-        <h1>Audio and reasoning examples</h1>
+        <p class="eyebrow">COTalker demo gallery</p>
+        <h1>Context-aware reasoning speech generation</h1>
         <p class="subtitle">
-          Browse historical dialogue audio, target text, and model outputs in
-          one comparison table.
+          COTalker studies how a model should infer how to speak from dialogue
+          history, instead of relying on manually written speaking-style
+          instructions.
         </p>
       </div>
       <div class="hero-card">
@@ -23,6 +24,61 @@
     </header>
 
     <main class="page-shell">
+      <section class="overview-card" aria-label="Project overview">
+        <div class="overview-copy">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2>A short introduction to the project</h2>
+          </div>
+          <p>
+            Given historical dialogue audio, target text, and a reference
+            speaker utterance, COTalker first understands the dialogue context,
+            then produces explicit chain-of-thought reasoning about the intended
+            speaking manner, and finally generates target speech with the
+            desired speaker timbre.
+          </p>
+          <p>
+            This page provides a lightweight overview of the system designs and
+            then an interactive listening table for comparing the end-to-end
+            model with cascaded baselines.
+          </p>
+        </div>
+
+        <div class="architecture-grid">
+          <article class="architecture-card">
+            <div class="architecture-text">
+              <p class="eyebrow">End-to-end model</p>
+              <h3>CoT-guided autoregressive modeling</h3>
+              <p>
+                Historical audio, target text, and reference speech are turned
+                into one autoregressive sequence that generates historical
+                understanding, CoT reasoning, and speech tokens in order.
+              </p>
+            </div>
+            <img
+              src="./assets/e2e.png"
+              alt="End-to-end COTalker autoregressive model architecture"
+            />
+          </article>
+
+          <article class="architecture-card">
+            <div class="architecture-text">
+              <p class="eyebrow">Cascaded baselines</p>
+              <h3>Reference comparison pipelines</h3>
+              <p>
+                We also build cascaded systems that combine speech
+                understanding, reasoning, TTS, and voice conversion modules for
+                side-by-side comparison.
+              </p>
+            </div>
+            <img
+              src="./assets/cascaded.png"
+              alt="COTalker cascaded baseline architectures"
+            />
+          </article>
+        </div>
+      </section>
+
       <section class="featured-card" aria-label="Featured demos">
         <div class="featured-heading">
           <div>

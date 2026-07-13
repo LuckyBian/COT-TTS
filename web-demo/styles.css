@@ -106,6 +106,70 @@ h2 {
   padding: 0 2rem 3rem;
 }
 
+.overview-card {
+  margin-bottom: 1rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.95), rgba(246, 239, 224, 0.92)),
+    radial-gradient(circle at top left, rgba(75, 113, 146, 0.14), transparent 26rem);
+  box-shadow: var(--shadow);
+}
+
+.overview-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 1.2rem;
+  align-items: start;
+  margin-bottom: 1.2rem;
+}
+
+.overview-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.architecture-card {
+  overflow: hidden;
+  border: 1px solid rgba(223, 214, 194, 0.9);
+  border-radius: 24px;
+  background: var(--card);
+}
+
+.architecture-text {
+  padding: 1rem 1rem 0.8rem;
+}
+
+.architecture-text h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+}
+
+.architecture-text p:last-child {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.68;
+}
+
+.architecture-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0.35rem 0.6rem 0.7rem;
+}
+
 .featured-card {
   margin-bottom: 1rem;
   padding: 1.2rem;
@@ -506,9 +570,18 @@ audio {
     display: block;
   }
 
+  .overview-copy,
+  .architecture-grid {
+    grid-template-columns: 1fr;
+  }
+
   .featured-heading p:last-child {
     margin-top: 0.75rem;
     text-align: left;
+  }
+
+  .architecture-card + .architecture-card {
+    margin-top: 1rem;
   }
 
   .featured-demo + .featured-demo {
