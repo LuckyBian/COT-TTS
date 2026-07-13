@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COT-TTS Demo Gallery</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">COT-TTS listening demo</p>
+        <h1>Audio and reasoning examples</h1>
+        <p class="subtitle">
+          Browse historical dialogue audio, target text, and model outputs in
+          one comparison table.
+        </p>
+      </div>
+      <div class="hero-card">
+        <span id="sampleCount">0 samples</span>
+        <span id="modelCount">0 models</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="featured-card" aria-label="Featured demos">
+        <div class="featured-heading">
+          <div>
+            <p class="eyebrow">Featured demos</p>
+            <h2>Two representative cases</h2>
+          </div>
+          <p>
+            These examples show how the model understands the dialogue context
+            before producing the target utterance.
+          </p>
+        </div>
+        <div id="featuredDemos" class="featured-grid"></div>
+      </section>
+
+      <section class="toolbar" aria-label="Demo filters">
+        <label>
+          Language
+          <select id="languageFilter">
+            <option value="all">All languages</option>
+            <option value="en">English</option>
+            <option value="zh">Chinese</option>
+          </select>
+        </label>
+        <label>
+          Model family
+          <select id="familyFilter">
+            <option value="all">All families</option>
+            <option value="final">Our</option>
+            <option value="three">Three-stage</option>
+            <option value="two">Two-stage</option>
+          </select>
+        </label>
+        <label class="search-box">
+          Search
+          <input id="searchInput" type="search" placeholder="eval id or model name" />
+        </label>
+      </section>
+
+      <section class="table-card">
+        <div class="table-title">
+          <div>
+            <h2>Demo Table</h2>
+            <p id="visibleCount">Showing 0 samples</p>
+          </div>
+          <p class="hint">Each row is one demo case. The model column contains all available systems.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Historical Dialogue Audio</th>
+                <th>Target Text</th>
+                <th>Model Name</th>
+              </tr>
+            </thead>
+            <tbody id="demoTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./demo-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
