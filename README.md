@@ -1,11 +1,10 @@
 # COTalker
 
-COTalker is a context-aware and reasoning-guided text-to-speech system. Given
-historical dialogue audio and a target utterance, COTalker first builds an
-explicit chain-of-thought style interpretation of the dialogue context,
-including speaker intent, scene, motivation, goal, emotion, and speaking style.
-The model then uses this structured reasoning to generate expressive speech
-that better matches the target text, dialogue context, and speaker state.
+COTalker is a context-aware reasoning speech generation framework. Given
+historical dialogue audio, target text, and a reference speaker utterance,
+COTalker first builds an explicit chain-of-thought interpretation of the
+dialogue context, then reasons about the intended speaking manner, and finally
+generates expressive target speech with the target speaker timbre.
 
 This repository currently hosts the public demo page and links to the resources
 used in our competition submission. More code, data, and evaluation resources
@@ -15,11 +14,11 @@ will be released progressively.
 
 | Resource | Status | Link |
 | --- | --- | --- |
-| Competition proposal | Released | [Link](https://example.com/cotalker-proposal) |
-| Competition website | Released | [Link](https://example.com/cotalker-competition) |
-| Competition baseline | Released | [Link](https://example.com/cotalker-baseline) |
-| Competition data | Released | [Link](https://example.com/cotalker-data) |
-| Demo page | Released | [Link](https://example.com/cotalker-demo) |
+| Proposal | Released | [arXiv](https://arxiv.org/abs/2606.21933) |
+| Challenge website | Released | [Website](https://iscslp2026-cot-tts.github.io/challenge-website/) |
+| Challenge dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
+| Challenge baseline | Released | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
+| Demo page source | Released | [`web-demo/`](./web-demo) |
 
 ## Coming Soon
 
@@ -34,13 +33,15 @@ will be released progressively.
 
 ## Demo Page
 
-The demo page is a fully static website. It includes representative COTalker
-examples and a comparison table with historical dialogue audio, target text,
-model names, and generated audio.
+The demo page lives in [`web-demo/`](./web-demo). It is a fully static website
+with a short project overview, architecture figures, representative COTalker
+examples, and a comparison table containing historical dialogue audio, target
+text, model names, and generated audio.
 
 To preview locally:
 
 ```bash
+cd web-demo
 python -m http.server 8898
 ```
 
