@@ -20,6 +20,7 @@ will be released progressively.
 | Challenge baseline | Released | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
 | Demo page source | Released | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
 | Model checkpoints and inference scripts | Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/inference)  |
+| Training code |Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/train) |
 
 ## Coming Soon
 
@@ -28,9 +29,8 @@ will be released progressively.
 | Full dataset | Coming soon |
 | COTalker paper | Coming soon |
 | Data processing pipeline | Coming soon |
-| Training code | Coming soon |
-| Evaluation data | Coming soon |
-| Evaluation protocols and metrics | Coming soon |
+| Evaluation data | To be released on August 3, 2026 |
+| Evaluation protocols and metrics | To be released on August 3, 2026 |
 
 ## Demo Page
 
