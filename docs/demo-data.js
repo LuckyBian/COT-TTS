@@ -23,7 +23,7 @@ window.DEMO_DATA = {
       "target_text": "丞相本以位极人臣，突取而代之，难独天下悠悠之口，不得人心。",
       "reference_audio": "featured/continue/reference_audio.wav",
       "understanding_text": "此刻人人庆贺独他不贵幸讯，心生不快便出声发问朱增道。[心生不满] \n非丞相不可称帝，而是时机未到。[无奈解释] \n汉室虽微，然并无暴虐。[安抚解释]",
-      "cot_text": "<Act>: 陈述事实\n<Scene>: 讨论丞相地位及不得人心的情况\n<Motivation>: 表达对丞相地位的担忧和不得人心的感慨\n<Goal>: 引起对方注意，可能希望对方理解当前困境\n<Emotion>: 延续之前的不满情绪，进一步表达无奈\n<Valid duration | Total duration>: 6.440000s | 7.981875s\n<Loudness | Expressive Intensity>: -31.489794dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为丞相地位难以取代且不得人心，所以无奈地愤怒的感慨。",
+      "cot_text": "<Act>: 陈述事实\n<Scene>: 讨论丞相地位及不得人心的情况\n<Motivation>: 表达对丞相地位的担忧和不得人心的感慨\n<Goal>: 引起对方注意，可能希望对方理解当前困境\n<Emotion>: 延续之前的不满情绪，进一步表达无奈\n<Valid duration | Total duration>: 6.440000s | 7.981875s\n<Loudness | Expressive Intensity>: -31.489794dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为丞相地位难以取代且不得人心，所以无奈地担忧感慨。",
       "output_audio": "featured/continue/output_audio.wav"
     }
   ],
