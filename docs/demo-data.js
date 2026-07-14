@@ -13,7 +13,7 @@ window.DEMO_DATA = {
       "target_text": "不必了，有我三位师弟在已经足够了。有需要我会再通知你们，你们退下吧。",
       "reference_audio": "featured/res/reference_audio.wav",
       "understanding_text": "我这次回来只是为了探亲，不必如此招摇过市。[严肃] \n是!令主大人,属下为您挑选了几位高手护您周全。[陈述]",
-      "cot_text": "<Act>: 拒绝护送提议，表达自信\n<Scene>: 拒绝多余的护送，保持低调\n<Motivation>: 自信且独立，不愿依赖他人\n<Goal>: 希望对方退下，避免麻烦\n<Emotion>: 从之前的愤怒转向坚定拒绝\n<Valid duration | Total duration>: 3.730000s | 5.349375s\n<Loudness | Expressive Intensity>: -31.379914dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为说话人自信且独立，所以用自信的方式拒绝'不必了，有我三位师弟在已经足够了，有需要我会再通知你们退下。'",
+      "cot_text": "<Act>: 拒绝护送提议，表达自信\n<Scene>: 拒绝多余的护送，保持低调\n<Motivation>: 自信且独立，不愿依赖他人\n<Goal>: 希望对方退下，避免麻烦\n<Emotion>: 从之前的严肃转向坚定拒绝\n<Valid duration | Total duration>: 3.730000s | 5.349375s\n<Loudness | Expressive Intensity>: -31.379914dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为说话人自信且独立，所以用自信的方式坚决拒绝'不必了，有我三位师弟在已经足够了，有需要我会再通知你们退下。'",
       "output_audio": "featured/res/output_audio.wav"
     },
     {
@@ -23,7 +23,7 @@ window.DEMO_DATA = {
       "target_text": "丞相本以位极人臣，突取而代之，难独天下悠悠之口，不得人心。",
       "reference_audio": "featured/continue/reference_audio.wav",
       "understanding_text": "此刻人人庆贺独他不贵幸讯，心生不快便出声发问朱增道。[心生不满] \n非丞相不可称帝，而是时机未到。[无奈解释] \n汉室虽微，然并无暴虐。[安抚解释]",
-      "cot_text": "<Act>: 陈述事实\n<Scene>: 讨论丞相地位及不得人心的情况\n<Motivation>: 表达对丞相地位的担忧和不得人心的感慨\n<Goal>: 引起对方注意，可能希望对方理解当前困境\n<Emotion>: 延续之前的不满情绪，进一步表达无奈\n<Valid duration | Total duration>: 6.440000s | 7.981875s\n<Loudness | Expressive Intensity>: -31.489794dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为丞相地位难以取代且不得人心，所以无奈地感慨地说了这句话。",
+      "cot_text": "<Act>: 陈述事实\n<Scene>: 讨论丞相地位及不得人心的情况\n<Motivation>: 表达对丞相地位的担忧和不得人心的感慨\n<Goal>: 引起对方注意，可能希望对方理解当前困境\n<Emotion>: 延续之前的不满情绪，进一步表达无奈\n<Valid duration | Total duration>: 6.440000s | 7.981875s\n<Loudness | Expressive Intensity>: -31.489794dBFS | 0.850000\n<Naturalness Score>: 4.000000\n<Noise Score>: 4.500000\n[Summary]\n因为丞相地位难以取代且不得人心，所以无奈地愤怒的感慨。",
       "output_audio": "featured/continue/output_audio.wav"
     }
   ],
