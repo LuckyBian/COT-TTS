@@ -19,6 +19,7 @@ will be released progressively.
 | Challenge dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
 | Challenge baseline | Released | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
 | Demo page source | Released | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
+| Model checkpoints and inference scripts | [Demo Page](https://luckybian.github.io/COTalker/index.html)  |
 
 ## Coming Soon
 
@@ -26,7 +27,6 @@ will be released progressively.
 | --- | --- |
 | Full dataset | Coming soon |
 | Data processing pipeline | Coming soon |
-| Model checkpoints and inference scripts | Coming soon |
 | Training code | Coming soon |
 | Evaluation data | Coming soon |
 | Evaluation protocols and metrics | Coming soon |
