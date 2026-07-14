@@ -26,6 +26,7 @@ will be released progressively.
 | Resource | Status |
 | --- | --- |
 | Full dataset | Coming soon |
+| COTalker paper | Coming soon |
 | Data processing pipeline | Coming soon |
 | Training code | Coming soon |
 | Evaluation data | Coming soon |
