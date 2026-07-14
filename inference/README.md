@@ -27,12 +27,12 @@ Example input mode:
 Before inference, prepare the following:
 
 1. VeOmni 1.7B HF checkpoint
-   Link: `TODO`
+   Link: `https://drive.google.com/file/d/1WEUuQJtC91LX3eJwjIas7gi2RUxjWiIU/view?usp=sharing`
    Place it at:
    - `models/hf_ckpt`
 
 2. Spark-TTS model files
-   Link: `TODO`
+   Link: `https://drive.google.com/file/d/1dvVt2KX2Uat82dhmwuYippkpJnC7NewV/view?usp=sharing`
    Place them at:
    - `models/spark_tts`
 
