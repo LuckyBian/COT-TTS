@@ -21,12 +21,12 @@ will be released progressively.
 | Demo page source | Released | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
 | Model checkpoints and E2E inference scripts | Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/inference)  |
 | Training code |Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/train) |
+| Full dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/cot_tts) |
 
 ## Coming Soon
 
 | Resource | Status |
 | --- | --- |
-| Full dataset | Coming soon |
 | COTalker paper | Coming soon |
 | Cascated system | Coming soon |
 | Data processing pipeline | Coming soon |
