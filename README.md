@@ -12,16 +12,16 @@ will be released progressively.
 
 ## Released Resources
 
-| Resource | Status | Link |
-| --- | --- | --- |
-| Proposal | Released | [arXiv](https://arxiv.org/abs/2606.21933) |
-| Challenge website | Released | [Website](https://iscslp2026-cot-tts.github.io/challenge-website/) |
-| Challenge dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
-| Challenge baseline | Released | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
-| Demo page source | Released | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
-| Model checkpoints and E2E inference scripts | Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/inference)  |
-| Training code |Released | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/train) |
-| Full dataset | Released | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/cot_tts) |
+| Resource  | Link |
+| ---  | --- |
+| Proposal  | [arXiv](https://arxiv.org/abs/2606.21933) |
+| Challenge website  | [Website](https://iscslp2026-cot-tts.github.io/challenge-website/) |
+| Challenge dataset  | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
+| Challenge baseline  | [GitHub](https://github.com/iscslp2026-cot-tts/baseline) |
+| Demo page source  | [Demo Page](https://luckybian.github.io/COTalker/index.html) |
+| Model checkpoints and E2E inference scripts | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/inference)  |
+| Training code  | [GitHub](https://github.com/LuckyBian/COTalker/tree/main/train) |
+| Full dataset  | [Hugging Face](https://huggingface.co/datasets/HKUSTAudio/cot_tts) |
 
 ## Coming Soon
 
