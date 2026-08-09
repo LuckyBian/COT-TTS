@@ -2,9 +2,6 @@
   const data = window.DEMO_DATA || { items: [], summary: {} };
   const featuredDemos = document.getElementById('featuredDemos');
   const tableBody = document.getElementById('demoTableBody');
-  const languageFilter = document.getElementById('languageFilter');
-  const familyFilter = document.getElementById('familyFilter');
-  const searchInput = document.getElementById('searchInput');
   const sampleCount = document.getElementById('sampleCount');
   const modelCount = document.getElementById('modelCount');
   const visibleCount = document.getElementById('visibleCount');
@@ -22,28 +19,32 @@
     return String(lang || 'Unknown').toUpperCase();
   }
 
-  function matchesFilters(item) {
-    const lang = languageFilter.value;
-    const family = familyFilter.value;
-    const query = searchInput.value.trim().toLowerCase();
-    if (lang !== 'all' && item.language !== lang) return false;
-
-    const models = filteredModels(item.models);
-    if (!models.length) return false;
-
-    if (!query) return true;
-    const haystack = [
-      item.eval_id,
-      item.target_text,
-      ...item.models.flatMap((model) => [model.key, model.display_key, model.name]),
-    ].join(' ').toLowerCase();
-    return haystack.includes(query);
+  function displayModelName(name) {
+    if (name === 'COTalker-0.6B') return 'Our-0.6B';
+    if (name === 'COTalker-1.7B') return 'Our-1.7B';
+    return name;
   }
 
-  function filteredModels(models) {
-    const family = familyFilter.value;
-    if (family === 'all') return models;
-    return models.filter((model) => model.family === family);
+  const MODEL_ORDER = [
+    'ground_truth',
+    'final__our-0.6',
+    'final__our-1.7',
+    'three__dia-a3b-fish2',
+    'three__dia-a3b-voxcpm',
+    'three__qwen3asr-a3b-fish2',
+    'three__qwenasr-a3b-voxcpm',
+    'two__qwen-fish',
+    'two__qwen-voxcpm',
+    'two__qwen3omni-seedvc',
+  ];
+
+  function orderedModels(models) {
+    const rank = new Map(MODEL_ORDER.map((key, index) => [key, index]));
+    return [...models].sort((a, b) => {
+      const aRank = rank.has(a.key) ? rank.get(a.key) : Number.MAX_SAFE_INTEGER;
+      const bRank = rank.has(b.key) ? rank.get(b.key) : Number.MAX_SAFE_INTEGER;
+      return aRank - bRank;
+    });
   }
 
   function renderAudio(src, label) {
@@ -95,7 +96,7 @@
       <article class="model-item ${escapeHtml(model.family)}">
         <div class="model-head">
           <div>
-            <div class="model-name">${escapeHtml(model.name)}</div>
+            <div class="model-name">${escapeHtml(displayModelName(model.name))}</div>
             <div class="model-key">${escapeHtml(model.display_key || model.key)}</div>
           </div>
           <span class="family-pill">${escapeHtml(model.family_label)}</span>
@@ -109,16 +110,26 @@
   }
 
   function renderRow(item) {
-    const models = filteredModels(item.models);
+    const models = orderedModels(item.models);
     return `
       <tr>
         <td class="history-col">
-          <div class="case-id">${escapeHtml(item.eval_id)}</div>
-          <div class="case-meta">${languageName(item.language)}</div>
-          ${renderAudio(item.history_audio, `${item.eval_id} historical dialogue audio`)}
+          <div class="info-card model-item info-item">
+            <div class="case-id">${escapeHtml(item.eval_id)}</div>
+            <div class="case-meta">${languageName(item.language)}</div>
+            <div class="output-row output-row-single">
+              <span>Historical audio</span>
+              ${renderAudio(item.history_audio, `${item.eval_id} historical dialogue audio`)}
+            </div>
+          </div>
         </td>
         <td class="target-col">
-          <p>${escapeHtml(item.target_text || 'No target text available.')}</p>
+          <div class="info-card model-item info-item">
+            <div class="output-row output-row-single text-row">
+              <span>Target text</span>
+              <p>${escapeHtml(item.target_text || 'No target text available.')}</p>
+            </div>
+          </div>
         </td>
         <td class="models-col">
           <div class="models-grid">
@@ -130,21 +141,25 @@
   }
 
   function render() {
-    const visibleItems = data.items.filter(matchesFilters);
+    const visibleItems = data.items || [];
     tableBody.innerHTML = visibleItems.map(renderRow).join('');
 
     const totalModels = data.items.reduce((sum, item) => sum + item.models.length, 0);
-    const visibleModels = visibleItems.reduce((sum, item) => sum + filteredModels(item.models).length, 0);
+    const visibleModels = visibleItems.reduce((sum, item) => sum + item.models.length, 0);
 
-    sampleCount.textContent = `${data.items.length} samples`;
-    modelCount.textContent = `${totalModels} model entries`;
+    if (sampleCount) {
+      sampleCount.textContent = `${data.items.length} samples`;
+    }
+    if (modelCount) {
+      modelCount.textContent = `${totalModels} model entries`;
+    }
     visibleCount.textContent = `Showing ${visibleItems.length} samples and ${visibleModels} model entries`;
 
     if (!visibleItems.length) {
       tableBody.innerHTML = `
         <tr>
           <td class="empty-state" colspan="3">
-            No matching demos. Try clearing the filters or search text.
+            No demos found.
           </td>
         </tr>
       `;
@@ -158,11 +173,6 @@
       featuredDemos.innerHTML = '<div class="empty-featured">No featured demos found.</div>';
     }
   }
-
-  [languageFilter, familyFilter, searchInput].forEach((el) => {
-    el.addEventListener('input', render);
-    el.addEventListener('change', render);
-  });
 
   renderFeatured();
   render();

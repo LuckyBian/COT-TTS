@@ -1,20 +1,20 @@
-# COTalker Demo Gallery
+# COT-TTS Demo Gallery
 
-This folder contains a self-contained static website for the COTalker demo gallery.
+This folder contains a self-contained static website for the COT-TTS demo gallery.
 
-COTalker studies context-aware reasoning speech generation. Given historical dialogue audio, target text, and a reference speaker utterance, the system first understands the dialogue context, then produces explicit chain-of-thought reasoning about the intended speaking manner, and finally generates target speech with the target speaker timbre.
+COT-TTS studies context-aware reasoning speech generation. Given historical dialogue audio, target text, and a reference speaker utterance, the system first understands the dialogue context, then produces explicit chain-of-thought reasoning about the intended speaking manner, and finally generates target speech with the target speaker timbre.
 
-The demo page gives a lightweight overview of the project and provides listening examples for both the end-to-end model and cascaded baselines.
+The demo page gives a lightweight overview of the project and provides listening examples for both the model and baseline systems.
 
 ## Model Overview
 
-### End-to-end CoT-guided autoregressive model
+### Model
 
-![End-to-end model architecture](./assets/e2e.png)
+![Model architecture](./assets/model.svg)
 
-### Cascaded reference systems
+### Baseline
 
-![Cascaded model architectures](./assets/cascaded.png)
+![Baseline architectures](./assets/baseline.svg)
 
 ## Open Resources
 

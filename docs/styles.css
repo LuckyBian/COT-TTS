@@ -33,10 +33,7 @@ select {
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2rem;
-  align-items: end;
+  display: block;
   max-width: 1500px;
   margin: 0 auto;
   padding: 3.5rem 2rem 2rem;
@@ -59,7 +56,7 @@ h2 {
 }
 
 h1 {
-  max-width: 850px;
+  max-width: none;
   font-size: clamp(3rem, 7vw, 6.7rem);
   letter-spacing: -0.07em;
 }
@@ -70,34 +67,12 @@ h2 {
 }
 
 .subtitle {
-  max-width: 760px;
+  max-width: none;
   margin: 1.2rem 0 0;
   color: var(--muted);
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   font-size: 1.05rem;
   line-height: 1.7;
-}
-
-.hero-card {
-  min-width: 210px;
-  padding: 1.2rem;
-  border: 1px solid rgba(65, 97, 75, 0.26);
-  border-radius: 26px;
-  background: rgba(255, 253, 247, 0.72);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
-}
-
-.hero-card span {
-  display: block;
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-weight: 800;
-}
-
-.hero-card span + span {
-  margin-top: 0.4rem;
-  color: var(--muted);
-  font-weight: 650;
 }
 
 .page-shell {
@@ -119,8 +94,8 @@ h2 {
 
 .overview-copy {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 1.2rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   align-items: start;
   margin-bottom: 1.2rem;
 }
@@ -133,6 +108,12 @@ h2 {
   line-height: 1.75;
 }
 
+.overview-text {
+  display: grid;
+  gap: 0;
+  max-width: none;
+}
+
 .architecture-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -140,14 +121,31 @@ h2 {
 }
 
 .architecture-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid rgba(223, 214, 194, 0.9);
   border-radius: 24px;
   background: var(--card);
 }
 
+.architecture-card-wide {
+  padding: 1rem;
+}
+
+.architecture-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.architecture-panel + .architecture-panel {
+  border-left: 1px solid rgba(223, 214, 194, 0.9);
+  padding-left: 1rem;
+}
+
 .architecture-text {
-  padding: 1rem 1rem 0.8rem;
+  padding: 0.2rem 0.2rem 0.8rem;
 }
 
 .architecture-text h3 {
@@ -167,7 +165,71 @@ h2 {
   display: block;
   width: 100%;
   height: auto;
-  padding: 0.35rem 0.6rem 0.7rem;
+  padding: 0.35rem 0.2rem 0.2rem;
+}
+
+.progress-card {
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.95), rgba(246, 239, 224, 0.92)),
+    radial-gradient(circle at top right, rgba(75, 113, 146, 0.12), transparent 24rem);
+  box-shadow: var(--shadow);
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: end;
+  padding: 0.35rem 0.2rem 1rem;
+}
+
+.progress-heading p:last-child {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.progress-column {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 24px;
+  background: var(--card);
+}
+
+.progress-column h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.progress-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.75;
+}
+
+.progress-list a {
+  color: var(--sage-dark);
+  text-decoration: none;
+}
+
+.progress-list a:hover {
+  text-decoration: underline;
 }
 
 .featured-card {
@@ -206,10 +268,14 @@ h2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  align-items: stretch;
 }
 
 .featured-demo {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   padding: 1.15rem;
   border: 1px solid rgba(223, 214, 194, 0.92);
@@ -237,6 +303,7 @@ h2 {
 .featured-demo h3 {
   margin: -0.35rem 0 1rem;
   padding-left: 0.15rem;
+  min-height: 2.8em;
   font-size: 1.45rem;
   letter-spacing: -0.04em;
 }
@@ -245,6 +312,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.7rem;
+  flex: 1;
 }
 
 .featured-step {
@@ -288,6 +356,18 @@ h2 {
   overflow: visible;
 }
 
+.featured-flow > *:nth-child(2) {
+  min-height: 120px;
+}
+
+.featured-flow > *:nth-child(4) {
+  min-height: 176px;
+}
+
+.featured-flow > *:nth-child(5) {
+  min-height: 280px;
+}
+
 .empty-featured {
   grid-column: 1 / -1;
   padding: 2rem;
@@ -295,68 +375,6 @@ h2 {
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   font-weight: 850;
   text-align: center;
-}
-
-.toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: grid;
-  grid-template-columns: 180px 180px minmax(220px, 1fr) auto;
-  gap: 0.85rem;
-  align-items: end;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid rgba(223, 214, 194, 0.88);
-  border-radius: 24px;
-  background: rgba(251, 247, 237, 0.88);
-  box-shadow: 0 14px 45px rgba(58, 44, 24, 0.08);
-  backdrop-filter: blur(16px);
-}
-
-.toolbar label {
-  color: var(--muted);
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.toolbar select,
-.toolbar input {
-  display: block;
-  width: 100%;
-  margin-top: 0.35rem;
-  padding: 0.78rem 0.85rem;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  color: var(--ink);
-  background: var(--card);
-  outline: none;
-}
-
-.toolbar select:focus,
-.toolbar input:focus {
-  border-color: var(--sage);
-  box-shadow: 0 0 0 4px rgba(125, 155, 123, 0.16);
-}
-
-.toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  min-height: 48px;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  background: var(--card);
-  white-space: nowrap;
-}
-
-.toggle input {
-  width: auto;
-  margin: 0;
 }
 
 .table-card {
@@ -389,12 +407,13 @@ h2 {
 
 .table-wrap {
   overflow: auto;
-  max-height: calc(100vh - 165px);
+  overflow-y: visible;
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
-  min-width: 1060px;
+  min-width: 1240px;
   border-collapse: separate;
   border-spacing: 0;
 }
@@ -413,6 +432,11 @@ th {
   text-transform: uppercase;
 }
 
+th:nth-child(1),
+th:nth-child(2) {
+  text-align: center;
+}
+
 td {
   vertical-align: top;
   padding: 1.1rem;
@@ -424,21 +448,34 @@ tr:nth-child(even) td {
 }
 
 .history-col {
-  width: 280px;
+  width: 240px;
+  min-width: 240px;
 }
 
 .target-col {
-  width: 330px;
+  width: 240px;
+  min-width: 240px;
 }
 
 .target-col p {
   margin: 0;
   font-size: 1.02rem;
-  line-height: 1.7;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 188px;
+  min-height: 188px;
 }
 
 .models-col {
-  min-width: 520px;
+  min-width: 980px;
 }
 
 .case-id {
@@ -470,16 +507,24 @@ audio {
 }
 
 .models-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: nowrap;
   gap: 0.8rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
 }
 
 .model-item {
-  padding: 0.95rem;
+  flex: 0 0 220px;
+  padding: 0.8rem;
   border: 1px solid rgba(223, 214, 194, 0.92);
   border-radius: 20px;
   background: var(--card);
+}
+
+.model-item.gt {
+  border-color: rgba(217, 164, 65, 0.58);
+  background: rgba(255, 248, 229, 0.9);
 }
 
 .model-item.final {
@@ -495,26 +540,26 @@ audio {
 }
 
 .model-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.8rem;
-  align-items: flex-start;
-  margin-bottom: 0.85rem;
+  display: block;
+  margin-bottom: 0.7rem;
 }
 
 .model-name {
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   font-weight: 850;
+  font-size: 0.92rem;
 }
 
 .model-key {
   margin-top: 0.15rem;
   color: var(--muted);
   font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
 }
 
 .family-pill {
+  display: inline-block;
+  margin-top: 0.45rem;
   flex: 0 0 auto;
   padding: 0.22rem 0.55rem;
   border-radius: 999px;
@@ -528,14 +573,35 @@ audio {
 }
 
 .output-row {
-  display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: center;
+  display: block;
   color: var(--muted);
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   font-size: 0.82rem;
   font-weight: 800;
+}
+
+.output-row span {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.output-row-single audio {
+  max-width: none;
+}
+
+.text-row {
+  flex: 1;
+  color: var(--ink);
+}
+
+.text-row p {
+  flex: 1;
+  overflow: visible;
+}
+
+.target-col .info-item {
+  height: auto;
+  min-height: 188px;
 }
 
 .missing,
@@ -552,17 +618,11 @@ audio {
 
 @media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
     padding: 2rem 1rem 1rem;
   }
 
   .page-shell {
     padding: 0 1rem 2rem;
-  }
-
-  .toolbar {
-    position: static;
-    grid-template-columns: 1fr;
   }
 
   .featured-heading,
@@ -571,17 +631,30 @@ audio {
   }
 
   .overview-copy,
-  .architecture-grid {
+  .architecture-grid,
+  .progress-grid {
     grid-template-columns: 1fr;
   }
 
-  .featured-heading p:last-child {
+  .featured-heading p:last-child,
+  .progress-heading p:last-child {
     margin-top: 0.75rem;
     text-align: left;
   }
 
   .architecture-card + .architecture-card {
     margin-top: 1rem;
+  }
+
+  .architecture-card-wide {
+    padding: 0.9rem;
+  }
+
+  .architecture-panel + .architecture-panel {
+    border-left: none;
+    border-top: 1px solid rgba(223, 214, 194, 0.9);
+    padding-left: 0;
+    padding-top: 1rem;
   }
 
   .featured-demo + .featured-demo {

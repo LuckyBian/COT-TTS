@@ -3,78 +3,122 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COTalker Demo Gallery</title>
+    <title>COT-TTS: Chain-of-Thought Reasoning for Context-Aware Text-to-Speech</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header class="hero">
       <div>
-        <p class="eyebrow">COTalker demo gallery</p>
-        <h1>Context-aware reasoning speech generation</h1>
+        <p class="eyebrow">COT-TTS demo gallery</p>
+        <h1>COT-TTS: Chain-of-Thought Reasoning for Context-Aware Text-to-Speech</h1>
         <p class="subtitle">
-          COTalker studies how a model should infer how to speak from dialogue
-          history, instead of relying on manually written speaking-style
-          instructions.
+          Recent text-to-speech systems support increasingly controllable and
+          expressive generation, but typically require users to specify how each
+          sentence should be spoken. In realistic dialogue, however, the
+          appropriate speaking manner should be inferred from the preceding
+          context.
         </p>
-      </div>
-      <div class="hero-card">
-        <span id="sampleCount">0 samples</span>
-        <span id="modelCount">0 models</span>
       </div>
     </header>
 
     <main class="page-shell">
       <section class="overview-card" aria-label="Project overview">
         <div class="overview-copy">
-          <div>
-            <p class="eyebrow">Overview</p>
-            <h2>A short introduction to the project</h2>
+          <div class="overview-text">
+            <p>
+              Recent text-to-speech (TTS) systems support increasingly
+              controllable and expressive generation, but typically require users
+              to specify how each sentence should be spoken. In realistic
+              dialogue, however, the appropriate speaking manner should be
+              inferred from the preceding context. We introduce <em>COT-TTS</em>,
+              a context-aware reasoning text-to-speech task. Given historical
+              dialogue audio, target text, and reference speech, a system is
+              required to infer the intended speaking manner, generate explicit
+              intermediate reasoning, and synthesize contextually appropriate
+              speech with the specified speaker timbre. Starting from
+              approximately 100K hours of Chinese and English dialogue audio, we
+              construct 9M training samples, including a 1M high-quality subset,
+              together with a source-disjoint benchmark of 800 human-validated
+              samples.
+            </p>
           </div>
-          <p>
-            Given historical dialogue audio, target text, and a reference
-            speaker utterance, COTalker first understands the dialogue context,
-            then produces explicit chain-of-thought reasoning about the intended
-            speaking manner, and finally generates target speech with the
-            desired speaker timbre.
-          </p>
-          <p>
-            This page provides a lightweight overview of the system designs and
-            then an interactive listening table for comparing the end-to-end
-            model with cascaded baselines.
-          </p>
         </div>
 
-        <div class="architecture-grid">
-          <article class="architecture-card">
-            <div class="architecture-text">
-              <p class="eyebrow">End-to-end model</p>
-              <h3>CoT-guided autoregressive modeling</h3>
-              <p>
-                Historical audio, target text, and reference speech are turned
-                into one autoregressive sequence that generates historical
-                understanding, CoT reasoning, and speech tokens in order.
-              </p>
-            </div>
-            <img
-              src="./assets/e2e.png"
-              alt="End-to-end COTalker autoregressive model architecture"
-            />
-          </article>
+        <article class="architecture-card architecture-card-wide">
+          <div class="architecture-grid">
+            <section class="architecture-panel">
+              <div class="architecture-text">
+                <p class="eyebrow">Model</p>
+                <h3>End-to-end autoregressive COT-TTS</h3>
+                <p>
+                  We develop 0.6B- and 1.7B-parameter end-to-end autoregressive
+                  models that sequentially generate emotion-tagged transcripts,
+                  speaking-manner reasoning, and speech tokens. The intermediate
+                  reasoning can be inspected and edited before speech synthesis.
+                </p>
+              </div>
+              <img
+                src="./assets/model.svg"
+                alt="End-to-end COT-TTS autoregressive model architecture"
+              />
+            </section>
 
-          <article class="architecture-card">
-            <div class="architecture-text">
-              <p class="eyebrow">Cascaded baselines</p>
-              <h3>Reference comparison pipelines</h3>
-              <p>
-                We also build cascaded systems that combine speech
-                understanding, reasoning, TTS, and voice conversion modules for
-                side-by-side comparison.
-              </p>
-            </div>
-            <img
-              src="./assets/cascaded.png"
-              alt="COTalker cascaded baseline architectures"
-            />
+            <section class="architecture-panel">
+              <div class="architecture-text">
+                <p class="eyebrow">Baseline</p>
+                <h3>Task-specific cascaded reference systems</h3>
+                <p>
+                  We construct task-specific baselines based on ASR--LLM--TTS,
+                  AudioLLM--TTS, and AudioLLM--VC pipelines for side-by-side
+                  comparison against the end-to-end models. These cascaded
+                  systems highlight how much explicit reasoning and controllable
+                  speech generation can be preserved when the task is solved
+                  through modular components instead of a unified model.
+                </p>
+              </div>
+              <img
+                src="./assets/baseline.svg"
+                alt="COT-TTS cascaded baseline architectures"
+              />
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section class="progress-card" aria-label="Open-source progress">
+        <div class="progress-heading">
+          <div>
+            <p class="eyebrow">Open-source progress</p>
+            <h2>Current releases and upcoming resources</h2>
+          </div>
+          <p>
+            The public release is being expanded progressively. The items below
+            summarize what is already available and what is scheduled next.
+          </p>
+        </div>
+        <div class="progress-grid">
+          <article class="progress-column">
+            <h3>Released</h3>
+            <ul class="progress-list">
+              <li><strong>Challenge proposal:</strong> <a href="https://arxiv.org/abs/2606.21933">https://arxiv.org/abs/2606.21933</a></li>
+              <li><strong>Challenge website:</strong> <a href="https://iscslp2026-cot-tts.github.io/challenge-website/">https://iscslp2026-cot-tts.github.io/challenge-website/</a></li>
+              <li><strong>Challenge dataset:</strong> <a href="https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS">https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS</a></li>
+              <li><strong>Challenge baseline:</strong> <a href="https://github.com/iscslp2026-cot-tts/baseline">https://github.com/iscslp2026-cot-tts/baseline</a></li>
+              <li><strong>Demo page:</strong> <a href="https://luckybian.github.io/COT-TTS">https://luckybian.github.io/COT-TTS</a></li>
+            </ul>
+          </article>
+          <article class="progress-column">
+            <h3>Coming soon</h3>
+            <ul class="progress-list">
+              <li><strong>COT-TTS paper:</strong> Coming soon</li>
+              <li><strong>Cascaded system:</strong> Coming soon</li>
+              <li><strong>Model checkpoints and inference scripts:</strong> Coming soon</li>
+              <li><strong>Training code:</strong> Coming soon</li>
+              <li><strong>Full dataset:</strong> Coming soon</li>
+              <li><strong>Data processing pipeline:</strong> Coming soon</li>
+              <li><strong>Evaluation data:</strong> Coming soon</li>
+              <li><strong>Evaluation protocols and metrics:</strong> Coming soon</li>
+            </ul>
           </article>
         </div>
       </section>
@@ -93,43 +137,19 @@
         <div id="featuredDemos" class="featured-grid"></div>
       </section>
 
-      <section class="toolbar" aria-label="Demo filters">
-        <label>
-          Language
-          <select id="languageFilter">
-            <option value="all">All languages</option>
-            <option value="en">English</option>
-            <option value="zh">Chinese</option>
-          </select>
-        </label>
-        <label>
-          Model family
-          <select id="familyFilter">
-            <option value="all">All families</option>
-            <option value="final">Our</option>
-            <option value="three">Three-stage</option>
-            <option value="two">Two-stage</option>
-          </select>
-        </label>
-        <label class="search-box">
-          Search
-          <input id="searchInput" type="search" placeholder="eval id or model name" />
-        </label>
-      </section>
-
       <section class="table-card">
         <div class="table-title">
           <div>
             <h2>Demo Table</h2>
             <p id="visibleCount">Showing 0 samples</p>
           </div>
-          <p class="hint">Each row is one demo case. The model column contains all available systems.</p>
+          <p class="hint">Each row is one COT-TTS case. The model column contains all available systems.</p>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Historical Dialogue Audio</th>
+                <th>Historical Audio</th>
                 <th>Target Text</th>
                 <th>Model Name</th>
               </tr>
