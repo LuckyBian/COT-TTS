@@ -243,6 +243,280 @@ h2 {
   box-shadow: var(--shadow);
 }
 
+.control-card {
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.94), rgba(246, 239, 224, 0.9)),
+    radial-gradient(circle at top left, rgba(125, 155, 123, 0.16), transparent 25rem);
+  box-shadow: var(--shadow);
+}
+
+.emotion-card {
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 253, 247, 0.94), rgba(246, 239, 224, 0.9)),
+    radial-gradient(circle at top right, rgba(75, 113, 146, 0.14), transparent 24rem);
+  box-shadow: var(--shadow);
+}
+
+.control-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: end;
+  padding: 0.35rem 0.2rem 1.1rem;
+}
+
+.control-heading p:last-child {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.emotion-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-items: end;
+  padding: 0.35rem 0.2rem 1.1rem;
+}
+
+.emotion-heading p:last-child {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.control-table-wrap {
+  overflow-x: auto;
+}
+
+.emotion-table-wrap {
+  overflow-x: auto;
+}
+
+.control-table {
+  width: 100%;
+  min-width: 1380px;
+  border-collapse: separate;
+  border-spacing: 0.8rem;
+}
+
+.control-table th {
+  position: static;
+  padding: 0 0.25rem 0.45rem;
+  color: var(--sage-dark);
+  background: transparent;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.control-table td {
+  padding: 0;
+  border-bottom: none;
+  background: transparent;
+  vertical-align: top;
+}
+
+.emotion-table {
+  width: 100%;
+  min-width: 1380px;
+  border-collapse: separate;
+  border-spacing: 0.8rem;
+}
+
+.emotion-table th {
+  position: static;
+  padding: 0 0.25rem 0.45rem;
+  color: var(--sage-dark);
+  background: transparent;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.emotion-table td {
+  padding: 0;
+  border-bottom: none;
+  background: transparent;
+  vertical-align: top;
+}
+
+.control-default-col {
+  width: 33%;
+}
+
+.control-variable-col {
+  width: 16%;
+}
+
+.control-audio-col {
+  width: 12.75%;
+}
+
+.emotion-category-col {
+  width: 16%;
+}
+
+.emotion-cell {
+  width: 28%;
+}
+
+.control-default,
+.control-variable-card,
+.control-audio-card {
+  height: 100%;
+  min-height: 170px;
+  padding: 1rem;
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.emotion-category-card,
+.emotion-entry {
+  border: 1px solid rgba(223, 214, 194, 0.92);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.emotion-category-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  height: 100%;
+  padding: 1rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.emotion-stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.emotion-entry {
+  display: grid;
+  gap: 0.65rem;
+  min-height: 170px;
+  padding: 0.95rem 1rem;
+}
+
+.emotion-entry-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: baseline;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.emotion-eval {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.8rem;
+}
+
+.emotion-text-entry p {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.96rem;
+  line-height: 1.62;
+}
+
+.emotion-summary-entry pre {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.control-default {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.control-default .case-id,
+.control-default .case-meta {
+  margin: 0;
+}
+
+.control-cot-row pre {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.control-variable-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.7rem;
+  min-height: 100%;
+}
+
+.control-variable-en {
+  font-size: 1.03rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.control-variable-note {
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.93rem;
+  line-height: 1.62;
+}
+
+.control-audio-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.control-setting {
+  color: var(--sage-dark);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .featured-heading {
   display: flex;
   justify-content: space-between;
@@ -630,6 +904,10 @@ audio {
     display: block;
   }
 
+  .control-heading {
+    display: block;
+  }
+
   .overview-copy,
   .architecture-grid,
   .progress-grid {
@@ -637,6 +915,7 @@ audio {
   }
 
   .featured-heading p:last-child,
+  .control-heading p:last-child,
   .progress-heading p:last-child {
     margin-top: 0.75rem;
     text-align: left;

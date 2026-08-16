@@ -135,6 +135,62 @@
         <div id="featuredDemos" class="featured-grid"></div>
       </section>
 
+      <section class="control-card" aria-label="Controllable edit demos">
+        <div class="control-heading">
+          <div>
+            <p class="eyebrow">Editable control demos</p>
+            <h2>Controlling duration, rhythm, and expressive intensity</h2>
+          </div>
+          <p>
+            By editing the intermediate CoT text, we can directly steer total
+            duration, speech rhythm, and expressive intensity while keeping the
+            same dialogue context and target text.
+          </p>
+        </div>
+        <div class="control-table-wrap">
+          <table class="control-table">
+            <thead>
+              <tr>
+                <th>Default</th>
+                <th>Control variable</th>
+                <th>Setting 1</th>
+                <th>Setting 2</th>
+                <th>Setting 3</th>
+                <th>Setting 4</th>
+              </tr>
+            </thead>
+            <tbody id="controlTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="emotion-card" aria-label="Emotion expressiveness demos">
+        <div class="emotion-heading">
+          <div>
+            <p class="eyebrow">Emotion expressiveness</p>
+            <h2>Expressive variation across dialogue contexts</h2>
+          </div>
+          <p>
+            These examples highlight how the system renders different emotions
+            under distinct dialogue situations, with matched English and Chinese
+            cases for each category.
+          </p>
+        </div>
+        <div class="emotion-table-wrap">
+          <table class="emotion-table">
+            <thead>
+              <tr>
+                <th>Emotion category</th>
+                <th>Historical audio</th>
+                <th>Target text</th>
+                <th>Output audio</th>
+              </tr>
+            </thead>
+            <tbody id="emotionTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
       <section class="table-card">
         <div class="table-title">
           <div>
@@ -159,6 +215,8 @@
     </main>
 
     <script src="./demo-data.js"></script>
+    <script src="./control-demo-data.js"></script>
+    <script src="./emotion-demo-data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

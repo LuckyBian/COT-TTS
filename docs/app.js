@@ -1,6 +1,8 @@
 (function () {
   const data = window.DEMO_DATA || { items: [], summary: {} };
   const featuredDemos = document.getElementById('featuredDemos');
+  const controlTableBody = document.getElementById('controlTableBody');
+  const emotionTableBody = document.getElementById('emotionTableBody');
   const tableBody = document.getElementById('demoTableBody');
   const sampleCount = document.getElementById('sampleCount');
   const modelCount = document.getElementById('modelCount');
@@ -140,6 +142,148 @@
     `;
   }
 
+  function renderControlDefaultCell(item) {
+    return `
+      <div class="control-default">
+        <div class="output-row output-row-single">
+          <span>Historical audio</span>
+          ${renderAudio(item.history_audio, `${window.CONTROL_DEMO_DATA.case_id} historical audio`)}
+        </div>
+        <div class="output-row output-row-single text-row control-cot-row">
+          <span>CoT reasoning</span>
+          <pre>${escapeHtml(item.cot_text)}</pre>
+        </div>
+        <div class="output-row output-row-single">
+          <span>Default audio</span>
+          ${renderAudio(item.output_audio, `${window.CONTROL_DEMO_DATA.case_id} default output audio`)}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderControlRow(row, rowIndex, defaultCellHtml) {
+    const cells = row.items.map((item) => `
+      <td class="control-audio-col">
+        <div class="control-audio-card">
+          <div class="control-setting">${escapeHtml(item.label)}</div>
+          ${renderAudio(item.audio, `${row.variable} ${item.label} audio`)}
+        </div>
+      </td>
+    `).join('');
+
+    const defaultCell = rowIndex === 0
+      ? `<td class="control-default-col" rowspan="${window.CONTROL_DEMO_DATA.rows.length}">${defaultCellHtml}</td>`
+      : '';
+
+    return `
+      <tr>
+        ${defaultCell}
+        <td class="control-variable-col">
+          <div class="control-variable-card">
+            <div class="control-variable-en">${escapeHtml(row.variable)}</div>
+            <div class="control-variable-note">${escapeHtml(row.note || '')}</div>
+          </div>
+        </td>
+        ${cells}
+      </tr>
+    `;
+  }
+
+  function renderControlTable() {
+    if (!controlTableBody || !window.CONTROL_DEMO_DATA) {
+      return;
+    }
+    const controlData = window.CONTROL_DEMO_DATA;
+    const defaultCellHtml = renderControlDefaultCell(controlData.default_case);
+    controlTableBody.innerHTML = controlData.rows
+      .map((row, index) => renderControlRow(row, index, defaultCellHtml))
+      .join('');
+  }
+
+  function renderEmotionEntry(entry, kind) {
+    if (kind === 'audio') {
+      return `
+        <div class="emotion-entry">
+          <div class="emotion-entry-head">
+            <span class="emotion-lang">${escapeHtml(entry.lang)}</span>
+            <span class="emotion-eval">${escapeHtml(entry.eval_id)}</span>
+          </div>
+          <div class="output-row output-row-single">
+            ${renderAudio(
+              entry.output_audio,
+              `${entry.eval_id} output audio`
+            )}
+          </div>
+        </div>
+      `;
+    }
+
+    if (kind === 'history') {
+      return `
+        <div class="emotion-entry">
+          <div class="emotion-entry-head">
+            <span class="emotion-lang">${escapeHtml(entry.lang)}</span>
+            <span class="emotion-eval">${escapeHtml(entry.eval_id)}</span>
+          </div>
+          <div class="output-row output-row-single">
+            ${renderAudio(
+              entry.history_audio,
+              `${entry.eval_id} historical audio`
+            )}
+          </div>
+        </div>
+      `;
+    }
+
+    if (kind === 'text') {
+      return `
+        <div class="emotion-entry emotion-text-entry">
+          <div class="emotion-entry-head">
+            <span class="emotion-lang">${escapeHtml(entry.lang)}</span>
+            <span class="emotion-eval">${escapeHtml(entry.eval_id)}</span>
+          </div>
+          <p>${escapeHtml(entry.target_text || 'No target text available.')}</p>
+        </div>
+      `;
+    }
+
+    return '';
+  }
+
+  function renderEmotionRow(row) {
+    return `
+      <tr>
+        <td class="emotion-category-col">
+          <div class="emotion-category-card">${escapeHtml(row.category)}</div>
+        </td>
+        <td class="emotion-cell">
+          <div class="emotion-stack">
+            ${row.entries.map((entry) => renderEmotionEntry(entry, 'history')).join('')}
+          </div>
+        </td>
+        <td class="emotion-cell">
+          <div class="emotion-stack">
+            ${row.entries.map((entry) => renderEmotionEntry(entry, 'text')).join('')}
+          </div>
+        </td>
+        <td class="emotion-cell">
+          <div class="emotion-stack">
+            ${row.entries.map((entry) => renderEmotionEntry(entry, 'audio')).join('')}
+          </div>
+        </td>
+      </tr>
+    `;
+  }
+
+  function renderEmotionTable() {
+    if (!emotionTableBody || !window.EMOTION_DEMO_DATA) {
+      return;
+    }
+    emotionTableBody.innerHTML = (window.EMOTION_DEMO_DATA.rows || [])
+      .map(renderEmotionRow)
+      .join('');
+  }
+
   function render() {
     const visibleItems = data.items || [];
     tableBody.innerHTML = visibleItems.map(renderRow).join('');
@@ -175,5 +319,7 @@
   }
 
   renderFeatured();
+  renderControlTable();
+  renderEmotionTable();
   render();
 })();
