@@ -198,8 +198,16 @@ h2 {
 
 .progress-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.progress-column-wide {
+  grid-column: span 2;
+}
+
+.progress-column-narrow {
+  grid-column: span 1;
 }
 
 .progress-column {
