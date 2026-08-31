@@ -1,0 +1,57 @@
+model:
+  model_path: model/Qwen3-0.6B
+  tokenizer_path: model/qwen3_sparktts_with_under_special
+  attn_implementation: flash_attention_2
+
+data:
+  # Stage1: ASR + TTS merged parquet parts directory
+  train_path: data/stage1/parquet
+  data_type: conversation
+  chat_template: chatml
+  datasets_type: mapping
+  max_seq_len: 2048
+  train_size: 60000000000
+  text_keys: messages
+  num_workers: 16
+  prefetch_factor: 2
+  drop_last: true
+  pin_memory: true
+
+train:
+  output_dir: outputs/stage1_0p6b
+  data_parallel_mode: fsdp1
+  ulysses_parallel_size: 1
+  global_batch_size: 32
+  micro_batch_size: 1
+  num_train_epochs: 1
+
+  rmpad: false
+  rmpad_with_pos_ids: true
+  bsz_warmup_ratio: 0.007
+  dyn_bsz: true
+  dyn_bsz_margin: 0
+  dyn_bsz_buffer_size: 200
+
+  optimizer: adamw
+  lr: 1.0e-4
+  lr_decay_style: cosine
+  max_grad_norm: 1.0
+
+  enable_mixed_precision: true
+  enable_gradient_checkpointing: true
+  enable_full_shard: true
+  enable_fsdp_offload: false
+  enable_activation_offload: false
+  init_device: cuda
+  enable_full_determinism: false
+  empty_cache_steps: 500
+
+  ckpt_manager: dcp
+  load_checkpoint_path: ""
+  save_steps: 2000
+  save_epochs: 1
+  save_hf_weights: false
+  keep_last_checkpoints: 5
+
+  wandb_project: VeOmni
+  wandb_name: qwen3-stage1-asr-tts

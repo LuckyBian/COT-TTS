@@ -1,0 +1,79 @@
+model:
+  model_path: model/Qwen3-1.7B
+  tokenizer_path: model/qwen3_sparktts_with_under_special
+  attn_implementation: flash_attention_2
+
+data:
+  # Same Spark Stage2 combine parquet as the 0.6B stage2 run.
+  train_path: data/stage2/parquet
+  data_type: conversation
+  chat_template: chatml
+  datasets_type: mapping
+  max_seq_len: 6000
+  # 50% keep unchanged; 50% delete a random continuous span of 0%-10%
+  # inside <audio_his_start> ... <audio_his_end>, while protecting the first
+  # 32 global tokens of the first history segment.
+  audio_his_drop_prob: 0.5
+  audio_his_drop_ratio_max: 0.10
+  audio_his_drop_skip_prefix_tokens: 32
+  # Set/override this from the launch file after the final parquet size is known.
+  train_size: 20000000000
+  text_keys: messages
+  num_workers: 8
+  prefetch_factor: 2
+  drop_last: true
+  pin_memory: true
+
+train:
+  output_dir: outputs/stage2_1p7b
+  data_parallel_mode: ddp
+  ulysses_parallel_size: 1
+  global_batch_size: 128
+  micro_batch_size: 2
+  num_train_epochs: 3
+
+  rmpad: false
+  rmpad_with_pos_ids: true
+  bsz_warmup_ratio: 0.007
+  dyn_bsz: true
+  dyn_bsz_margin: 0
+  dyn_bsz_buffer_size: 200
+
+  optimizer: adamw
+  lr: 1.0e-5
+  lr_min: 1.0e-6
+  lr_warmup_ratio: 0.1
+  lr_decay_style: cosine
+  weight_decay: 0.1
+  max_grad_norm: 1.0
+
+  enable_mixed_precision: true
+  enable_gradient_checkpointing: true
+  enable_full_shard: true
+  enable_fsdp_offload: false
+  enable_activation_offload: false
+  init_device: cuda
+  enable_full_determinism: false
+  empty_cache_steps: 500
+
+  ckpt_manager: dcp
+  load_checkpoint_path: ""
+  load_model_only: true
+  save_steps: 0
+  logging_steps: 10
+  save_epochs: 0
+  save_epoch_points:
+    - 0.5
+    - 0.75
+    - 1.0
+    - 1.25
+    - 1.5
+    - 2.0
+    - 2.5
+    - 3.0
+  save_hf_weights: false
+  keep_last_checkpoints: 0
+  keep_best_and_last_checkpoints: true
+
+  wandb_project: VeOmni
+  wandb_name: qwen3-1p7b-stage2-combine-8gpu-3ep

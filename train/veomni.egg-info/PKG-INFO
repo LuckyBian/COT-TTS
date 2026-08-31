@@ -1,0 +1,192 @@
+Metadata-Version: 2.4
+Name: veomni
+Version: 0.1.0
+Summary: VeOmni: Scaling any Modality Model Training to any Accelerators with PyTorch native Training Framework
+Author-email: ByteDance-Seed <doubao-llm@bytedance.com>
+Project-URL: Homepage, https://github.com/ByteDance-Seed/VeOmni
+Project-URL: Source Code, https://github.com/ByteDance-Seed/VeOmni
+Requires-Python: <3.12,>=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: blobfile>=3.0.0
+Requires-Dist: datasets<=2.21.0,>=2.16.0
+Requires-Dist: packaging<26.0,>=23.0
+Requires-Dist: torchdata<1.0,>=0.8.0
+Requires-Dist: tiktoken>=0.9.0
+Requires-Dist: diffusers<=0.31.0,>=0.30.0
+Requires-Dist: psutil
+Requires-Dist: timm
+Requires-Dist: wandb
+Requires-Dist: setuptools
+Requires-Dist: einops>=0.8.1
+Provides-Extra: dev
+Requires-Dist: pre-commit<5.0,>=4.0.0; extra == "dev"
+Requires-Dist: ruff<1.0,>=0.7.0; extra == "dev"
+Requires-Dist: pytest<8.0,>=6.0.0; extra == "dev"
+Requires-Dist: expecttest<0.4,>=0.3.0; extra == "dev"
+Provides-Extra: audio
+Requires-Dist: torchcodec; extra == "audio"
+Requires-Dist: av<15.0,>=14.3.0; extra == "audio"
+Requires-Dist: librosa<0.12,>=0.11.0; extra == "audio"
+Requires-Dist: soundfile<0.14,>=0.13.1; extra == "audio"
+Provides-Extra: video
+Requires-Dist: torchcodec; extra == "video"
+Requires-Dist: av<15.0,>=14.3.0; extra == "video"
+Requires-Dist: librosa<0.12,>=0.11.0; extra == "video"
+Requires-Dist: soundfile<0.14,>=0.13.1; extra == "video"
+Provides-Extra: dit
+Requires-Dist: diffusers<=0.31.0,>=0.30.0; extra == "dit"
+Requires-Dist: bitsandbytes<=0.47.0,>=0.46.0; extra == "dit"
+Provides-Extra: npu-aarch64
+Requires-Dist: torch==2.7.1; extra == "npu-aarch64"
+Requires-Dist: torch-npu==2.7.1; extra == "npu-aarch64"
+Requires-Dist: torchvision==0.22.1; extra == "npu-aarch64"
+Requires-Dist: torchaudio==2.7.1; extra == "npu-aarch64"
+Requires-Dist: decorator>=5.2.1; extra == "npu-aarch64"
+Requires-Dist: scipy>=1.16.2; extra == "npu-aarch64"
+Requires-Dist: torchcodec<0.6.0,>=0.4.0; extra == "npu-aarch64"
+Provides-Extra: npu
+Requires-Dist: torch==2.7.1+cpu; extra == "npu"
+Requires-Dist: torch-npu==2.7.1; extra == "npu"
+Requires-Dist: torchvision==0.22.1+cpu; extra == "npu"
+Requires-Dist: torchaudio==2.7.1+cpu; extra == "npu"
+Requires-Dist: decorator>=5.2.1; extra == "npu"
+Requires-Dist: scipy>=1.16.2; extra == "npu"
+Requires-Dist: torchcodec<0.6.0,>=0.4.0; extra == "npu"
+Provides-Extra: gpu
+Requires-Dist: torch==2.9.1+cu129; extra == "gpu"
+Requires-Dist: torchvision==0.24.1+cu129; extra == "gpu"
+Requires-Dist: torchaudio==2.9.1+cu129; extra == "gpu"
+Requires-Dist: nvidia-cusparselt-cu12; extra == "gpu"
+Requires-Dist: nvidia-nccl-cu12; extra == "gpu"
+Requires-Dist: liger-kernel; extra == "gpu"
+Requires-Dist: flash-attn; extra == "gpu"
+Requires-Dist: flash-attn-3; extra == "gpu"
+Requires-Dist: hf_transfer; extra == "gpu"
+Requires-Dist: torchcodec==0.8.1; extra == "gpu"
+Requires-Dist: cuda-python==12.9.1; extra == "gpu"
+Requires-Dist: torch-c-dlpack-ext; extra == "gpu"
+Provides-Extra: megatron
+Requires-Dist: megatron-energon>=7.2.1; extra == "megatron"
+Provides-Extra: trl
+Requires-Dist: trl<=0.9.6; extra == "trl"
+Provides-Extra: fa4
+Requires-Dist: flash-attn-cute; extra == "fa4"
+Requires-Dist: nvidia-cutlass-dsl>=4.4.0; extra == "fa4"
+Provides-Extra: transformers5-exp
+Requires-Dist: transformers==5.2.0; extra == "transformers5-exp"
+
+# COT-TTS Train
+
+## Overview
+
+This directory contains a minimal training scaffold copied from the VeOmni framework for the COT-TTS project.
+
+The current copy focuses on the framework layer only:
+
+- `veomni/`: core training framework, including arguments, data pipeline, distributed training, model wrappers, ops, optimizers, schedulers, and utilities
+- `tasks/`: task entrypoints, including the generic torch training launcher
+- `train.sh`: distributed training launcher based on `torchrun`
+- `pyproject.toml`, `uv.lock`, `Makefile`, `build.sh`: project packaging and build metadata
+- `env/environment.yaml`: original environment description kept as reference
+- `requirements.veomni.freeze.txt`: original exported package snapshot kept as reference
+- `requirements.txt`: GitHub-friendly install list without machine-specific local paths
+- `setup_train_env.sh`: one-command local environment setup under `train/runtime_env`
+
+To keep this directory clean and reusable, the following are intentionally not copied here yet:
+
+- training data
+- pretrained model weights
+- experiment configs
+- outputs, checkpoints, logs, and inference artifacts
+
+The tokenizer assets used by the released training configs are included under:
+
+- `model/qwen3_sparktts_with_under_special`
+
+This gives us a clean base that we can later adapt into the final COT-TTS training codebase.
+
+## Data Format
+
+The training data is organized around one unified sequence template, and all tasks are defined as variations of this structure:
+
+```text
+<bos>
+<task_start>aaa<task_end>
+<history_start>
+<audio_his_start>ccc<audio_his_end>
+<history_end>
+<target_start>
+<text_start>ddd<text_end>
+<audio_ref_start>fff<audio_ref_end>
+<target_end>
+<output_start>
+<under_start>iii<under_end>
+<cot_start>ggg<cot_end>
+<audio_tar_start>hhh<audio_tar_end>
+<output_end>
+<eos>
+```
+
+In this template:
+
+- `aaa` is the task name
+- `ccc` is the history audio token sequence
+- `ddd` is the target text
+- `fff` is the reference audio token sequence
+- `iii` is the under/understanding field
+- `ggg` is the chain-of-thought field
+- `hhh` is the target audio token sequence
+
+Different tasks do not introduce completely different data formats. Instead, they reuse this common structure and adjust which fields are present, emphasized, or supervised.
+
+## Model Download
+
+The released training code expects the base models to be downloaded separately from the official model pages:
+
+- Qwen3 0.6B: `https://huggingface.co/Qwen/Qwen3-0.6B`
+- Qwen3 1.7B: `https://huggingface.co/Qwen/Qwen3-1.7B`
+- Spark-TTS: `https://huggingface.co/SparkAudio/Spark-TTS-0.5B`
+
+## Environment Setup
+
+Clone the repo, then create the local training environment under `train/runtime_env`:
+
+```bash
+cd train
+bash setup_train_env.sh
+source runtime_env/bin/activate
+```
+
+This avoids any dependency on machine-specific personal virtual environment
+paths.
+
+The dependency snapshot was exported from a Python `3.11.8` environment.
+
+Notes:
+
+- The default install target is Linux + CUDA 12.4.
+- If a machine uses a different CUDA stack, override `TORCH_INDEX_URL` before
+  running `setup_train_env.sh`.
+- `flash-attn` is not required by the default setup script.
+
+If you need to compare or rebuild dependencies, use these files:
+
+- `pyproject.toml`
+- `uv.lock`
+- `env/environment.yaml`
+- `requirements.veomni.freeze.txt`
+- `requirements.txt`
+
+## Paths and Local Setup
+
+The released configs use repository-relative paths for models, tokenizer, and
+outputs. Training data paths should be prepared locally and can be passed in
+through the launch scripts.
+
+Before running training, users should download:
+
+- `model/Qwen3-0.6B`
+- `model/Qwen3-1.7B`
+- `model/Spark-TTS`
+
+and prepare their own parquet data directories for each stage.

@@ -2,3 +2,6 @@ infer/runtime_env/
 infer/*.tar.gz
 **/__pycache__/
 **/*.pyc
+train/runtime_env/
+train/outputs/
+train/tmp/

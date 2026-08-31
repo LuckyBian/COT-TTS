@@ -1,0 +1,145 @@
+{
+  "qwen3_tokenizer": "/aifs4su/weizhenbian/code/VeOmni/model/Qwen3-0.6B",
+  "spark_tokenizer": "/aifs4su/weizhenbian/code/VeOmni/model/qwen3_sparktts_with_special",
+  "output_dir": "/aifs4su/weizhenbian/code/VeOmni/model/qwen3_sparktts_with_under_special",
+  "base_loaded_from": "spark_tokenizer",
+  "vocab_before": 165182,
+  "num_added_structure_special": 2,
+  "vocab_after": 165184,
+  "qwen_vocab_size_tokenizer_view": 151669,
+  "spark_vocab_size_tokenizer_view": 165182,
+  "spark_not_in_qwen_count": 13517,
+  "qwen_not_in_spark_count": 4,
+  "spark_not_in_qwen_examples": [
+    "<audio_his_end>",
+    "<audio_his_start>",
+    "<audio_ref_end>",
+    "<audio_ref_start>",
+    "<audio_tar_end>",
+    "<audio_tar_start>",
+    "<bos>",
+    "<cot_end>",
+    "<cot_start>",
+    "<eos>",
+    "<history_end>",
+    "<history_start>",
+    "<output_end>",
+    "<output_start>",
+    "<spk_his_end>",
+    "<spk_his_start>",
+    "<spk_tar_end>",
+    "<spk_tar_start>",
+    "<target_end>",
+    "<target_start>"
+  ],
+  "qwen_not_in_spark_examples": [
+    "</think>",
+    "</tool_response>",
+    "<think>",
+    "<tool_response>"
+  ],
+  "structure_special_tokens": [
+    "<bos>",
+    "<eos>",
+    "<task_start>",
+    "<task_end>",
+    "<history_start>",
+    "<history_end>",
+    "<spk_his_start>",
+    "<spk_his_end>",
+    "<audio_his_start>",
+    "<audio_his_end>",
+    "<target_start>",
+    "<target_end>",
+    "<audio_tar_start>",
+    "<audio_tar_end>",
+    "<spk_tar_start>",
+    "<spk_tar_end>",
+    "<audio_ref_start>",
+    "<audio_ref_end>",
+    "<output_start>",
+    "<output_end>",
+    "<under_start>",
+    "<under_end>",
+    "<cot_start>",
+    "<cot_end>",
+    "<text_start>",
+    "<text_end>"
+  ],
+  "bos_token": "<bos>",
+  "eos_token": "<eos>",
+  "sanity_check": {
+    "<history_start>": {
+      "in_vocab": true,
+      "id": 165162,
+      "encoded_ids": [
+        165162
+      ],
+      "single_token": true
+    },
+    "<audio_his_start>": {
+      "in_vocab": true,
+      "id": 165166,
+      "encoded_ids": [
+        165166
+      ],
+      "single_token": true
+    },
+    "<audio_tar_start>": {
+      "in_vocab": true,
+      "id": 165170,
+      "encoded_ids": [
+        165170
+      ],
+      "single_token": true
+    },
+    "<under_start>": {
+      "in_vocab": true,
+      "id": 165182,
+      "encoded_ids": [
+        165182
+      ],
+      "single_token": true
+    },
+    "<under_end>": {
+      "in_vocab": true,
+      "id": 165183,
+      "encoded_ids": [
+        165183
+      ],
+      "single_token": true
+    },
+    "<cot_start>": {
+      "in_vocab": true,
+      "id": 165178,
+      "encoded_ids": [
+        165178
+      ],
+      "single_token": true
+    },
+    "<|bicodec_global_10|>": {
+      "in_vocab": true,
+      "id": 151675,
+      "encoded_ids": [
+        151675
+      ],
+      "single_token": true
+    },
+    "<|bicodec_semantic_311|>": {
+      "in_vocab": true,
+      "id": 156072,
+      "encoded_ids": [
+        156072
+      ],
+      "single_token": true
+    },
+    "<|pitch_value_0|>": {
+      "in_vocab": true,
+      "id": 163953,
+      "encoded_ids": [
+        163953
+      ],
+      "single_token": true
+    }
+  }
+}
