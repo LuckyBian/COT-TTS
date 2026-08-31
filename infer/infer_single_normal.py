@@ -2,19 +2,19 @@
 from __future__ import annotations
 
 import argparse
-import shutil
 from pathlib import Path
 
 from cot_tts_single_infer_common import (
     BEST_MODEL_SPECS,
     INFER_ROOT,
     InferResult,
-    build_single_case_dataset,
-    collect_formal_outputs,
+    generate_audio_from_cot,
+    generate_cot,
+    load_single_infer_runtime,
+    make_infer_args,
     model_spec,
     prepare_runtime_audio,
     read_target_text,
-    run_formal_infer,
     write_failure_artifacts,
     write_result_manifest,
 )
@@ -24,7 +24,7 @@ DEFAULT_OUTPUT_ROOT = INFER_ROOT / "outputs_normal"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Single-sample normal inference via the exact batch infer scripts.")
+    parser = argparse.ArgumentParser(description="Single-sample normal inference.")
     parser.add_argument("--model-size", choices=sorted(BEST_MODEL_SPECS.keys()), default="0p6")
     parser.add_argument("--history-audio", type=Path, required=True)
     parser.add_argument("--reference-audio", type=Path, required=True)
@@ -36,7 +36,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", type=str, default="cuda:0")
     parser.add_argument("--history-mode", choices=["full", "semantic", "full_first_then_semantic"], default="full")
     parser.add_argument("--torch-dtype", choices=["bfloat16", "float16", "float32"], default="bfloat16")
-    parser.add_argument("--attn-implementation", type=str, default="flash_attention_2")
+    parser.add_argument("--attn-implementation", type=str, default="sdpa")
     parser.add_argument("--cot-max-new-tokens", type=int, default=800)
     parser.add_argument("--cot-min-new-tokens", type=int, default=32)
     parser.add_argument("--audio-max-new-tokens", type=int, default=1600)
@@ -62,15 +62,14 @@ def main() -> None:
     manifest_path = output_dir / "manifest.json"
     target_text = ""
     runtime_audio_dir = None
+    runtime = None
     stage = "setup"
     try:
         target_text = read_target_text(args.text, str(args.text_file) if args.text_file else "")
         output_dir.mkdir(parents=True, exist_ok=True)
-
-        runtime_root = output_dir / "_runtime"
-        dataset_root = runtime_root / "input_dataset"
-        infer_root = runtime_root / "formal_infer_outputs"
         run_log_path = output_dir / "run.log"
+        generated_cot_dst = output_dir / "generated_cot.txt"
+        generated_wav_dst = output_dir / "output.wav"
 
         temperature = args.temperature if args.temperature >= 0 else float(spec["temperature"])
         top_p = args.top_p if args.top_p >= 0 else float(spec["top_p"])
@@ -79,57 +78,89 @@ def main() -> None:
         stage = "prepare_audio"
         runtime_audio_dir, history_16k, reference_16k = prepare_runtime_audio(args.history_audio, args.reference_audio)
 
-        stage = "build_dataset"
-        build_single_case_dataset(
-            dataset_root=dataset_root,
-            language=args.language,
-            sample_id=args.sample_id,
-            history_audio_path=history_16k,
-            reference_audio_path=reference_16k,
-            target_text=target_text,
+        stage = "load_runtime"
+        runtime = load_single_infer_runtime(
+            model_size=args.model_size,
+            device=args.device,
+            torch_dtype=args.torch_dtype,
+            attn_implementation=args.attn_implementation,
         )
 
-        stage = "formal_infer"
-        cmd = run_formal_infer(
-            model_size=args.model_size,
-            mode="normal",
-            data_root=dataset_root,
-            output_root=infer_root,
-            language=args.language,
-            sample_id=args.sample_id,
-            device=args.device,
+        infer_args = make_infer_args(
             history_mode=args.history_mode,
             torch_dtype=args.torch_dtype,
             attn_implementation=args.attn_implementation,
+            do_sample=args.do_sample,
             temperature=temperature,
             top_p=top_p,
+            repetition_penalty=args.repetition_penalty,
+            no_repeat_ngram_size=args.no_repeat_ngram_size,
             cot_max_new_tokens=args.cot_max_new_tokens,
             cot_min_new_tokens=args.cot_min_new_tokens,
             audio_max_new_tokens=args.audio_max_new_tokens,
             audio_min_new_tokens=args.audio_min_new_tokens,
-            do_sample=args.do_sample,
-            repetition_penalty=args.repetition_penalty,
-            no_repeat_ngram_size=args.no_repeat_ngram_size,
-            cot_retries=args.cot_retries,
-            audio_retries=audio_retries,
             max_semantic_tokens=args.max_semantic_tokens,
-            global_source=args.global_source,
             sample_rate=args.sample_rate,
-            overwrite=True,
-            run_log_path=run_log_path,
         )
 
-        stage = "collect_outputs"
-        generated_cot_src, generated_wav_src = collect_formal_outputs(
-            infer_root,
-            args.model_size,
-            args.language,
-            args.sample_id,
+        stage = "generate_cot"
+        cot_error = None
+        cot_text = ""
+        for _ in range(max(1, args.cot_retries)):
+            try:
+                cot_text = generate_cot(
+                    runtime=runtime,
+                    infer_args=infer_args,
+                    history_audio_path=history_16k,
+                    reference_audio_path=reference_16k,
+                    target_text=target_text,
+                )
+                generated_cot_dst.write_text(cot_text + "\n", encoding="utf-8")
+                cot_error = None
+                break
+            except Exception as exc:
+                cot_error = exc
+        if cot_error is not None:
+            raise cot_error
+
+        stage = "generate_audio"
+        audio_error = None
+        for _ in range(max(1, audio_retries)):
+            try:
+                generate_audio_from_cot(
+                    runtime=runtime,
+                    infer_args=infer_args,
+                    history_audio_path=history_16k,
+                    reference_audio_path=reference_16k,
+                    target_text=target_text,
+                    cot_text=cot_text,
+                    output_wav_path=generated_wav_dst,
+                    global_source=args.global_source,
+                )
+                audio_error = None
+                break
+            except Exception as exc:
+                audio_error = exc
+        if audio_error is not None:
+            raise audio_error
+
+        run_log_path.write_text(
+            "\n".join(
+                [
+                    f"model_size={args.model_size}",
+                    f"checkpoint_path={checkpoint_path}",
+                    f"history_audio={args.history_audio}",
+                    f"reference_audio={args.reference_audio}",
+                    f"language={args.language}",
+                    f"sample_id={args.sample_id}",
+                    f"attn_implementation={args.attn_implementation}",
+                    f"temperature={temperature}",
+                    f"top_p={top_p}",
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
         )
-        generated_cot_dst = output_dir / "generated_cot.txt"
-        generated_wav_dst = output_dir / "output.wav"
-        shutil.copy2(generated_cot_src, generated_cot_dst)
-        shutil.copy2(generated_wav_src, generated_wav_dst)
 
         result = InferResult(
             model_size=args.model_size,
@@ -142,7 +173,6 @@ def main() -> None:
             run_log_path=str(run_log_path),
             mode="normal",
             language=args.language,
-            command=cmd,
         )
         write_result_manifest(manifest_path, result)
         print(f"[done] model={args.model_size}")

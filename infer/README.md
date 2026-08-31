@@ -16,8 +16,8 @@ Output:
 - generated COT reasoning text
 - synthesized target audio
 
-This version only keeps the default normal inference path. Edit-mode, portable
-environment packaging, and large bundled model files are intentionally omitted.
+This version only keeps the default normal inference path. Edit-mode and
+environment bundling are intentionally omitted.
 
 ## Required Models
 
@@ -31,39 +31,62 @@ infer/
 │   └── Spark-TTS-0.5B/
 ```
 
+Download source:
+
+- Hugging Face repo: `https://huggingface.co/HKUSTAudio/COT-TTS`
+
+Expected subfolders under `infer/models/`:
+
+- `best_0p6`
+- `best_1p7`
+- `Spark-TTS-0.5B`
+
+Example:
+
+```bash
+cd infer/models
+huggingface-cli download HKUSTAudio/COT-TTS best_0p6 best_1p7 Spark-TTS-0.5B --repo-type model --local-dir .
+```
+
 ## Environment
 
-If you already have the inference environment, activate it before running:
+Clone the repo, then create the local inference environment under `infer/runtime_env`:
 
 ```bash
-source /aifs4su/weizhenbian/envs/veomni/bin/activate
-```
-
-If you also prepared a local `runtime_env/` under this folder, you can use:
-
-```bash
+cd infer
+bash setup_infer_env.sh
 source activate_infer_env.sh
 ```
+
+This installs the pinned Python dependencies from `requirements.txt` into a
+local virtualenv, so users do not need any machine-specific Python path.
+
+Notes:
+
+- The default install target is Linux + CUDA 12.4.
+- If a machine uses a different CUDA stack, override `TORCH_INDEX_URL` before
+  running `setup_infer_env.sh`.
+- `flash-attn` is not required by default in this repo-level setup.
 
 ## Demo Command
 
 ```bash
-cd /aifs4su/weizhenbian/code/COT-TTS/infer
+cd infer
 
-source /aifs4su/weizhenbian/envs/veomni/bin/activate
+source activate_infer_env.sh
 
 python infer_single_normal.py \
   --model-size 1p7 \
-  --history-audio /aifs4su/weizhenbian/code/COT-TTS/infer/demo/eval-zh-837534_his.wav \
-  --reference-audio /aifs4su/weizhenbian/code/COT-TTS/infer/demo/eval-zh-837534_ref.wav \
-  --text-file /aifs4su/weizhenbian/code/COT-TTS/infer/demo/eval-zh-837534.txt \
+  --history-audio demo/eval-zh-837534_his.wav \
+  --reference-audio demo/eval-zh-837534_ref.wav \
+  --text-file demo/eval-zh-837534.txt \
   --language zh \
   --sample-id eval-zh-837534_demo \
-  --output-root /aifs4su/weizhenbian/code/COT-TTS/infer/demo/outputs \
+  --output-root demo/outputs \
   --device cuda:2 \
   --history-mode full \
   --torch-dtype bfloat16 \
-  --attn-implementation flash_attention_2 \
+  --attn-implementation sdpa \
   --cot-max-new-tokens 800 \
   --audio-max-new-tokens 1600 \
   --temperature 0.6 \

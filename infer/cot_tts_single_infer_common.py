@@ -2,9 +2,7 @@
 from __future__ import annotations
 
 import json
-import os
 import shutil
-import subprocess
 import sys
 import tempfile
 from dataclasses import asdict, dataclass
@@ -17,10 +15,7 @@ import torch
 
 
 INFER_ROOT = Path(__file__).resolve().parent
-REPO_ROOT = INFER_ROOT.parent.parent
-VEOMNI_ENV_PYTHON = Path("/aifs4su/weizhenbian/envs/veomni/bin/python")
 SPARK_MODEL_DIR = INFER_ROOT / "models" / "Spark-TTS-0.5B"
-FINAL_INFER_NEW_DIR = REPO_ROOT / "cot-tts-eval" / "final-infer-new"
 VENDOR_DIR = INFER_ROOT / "vendor"
 if str(VENDOR_DIR) not in sys.path:
     sys.path.insert(0, str(VENDOR_DIR))
@@ -30,9 +25,6 @@ BEST_MODEL_SPECS = {
         "checkpoint_path": INFER_ROOT / "models" / "best_0p6",
         "hf_model_dir": INFER_ROOT / "models" / "best_0p6" / "hf_ckpt",
         "tokenizer_path": INFER_ROOT / "models" / "best_0p6" / "hf_ckpt",
-        "family": "0p6",
-        "tag": "0p6_single_best",
-        "normal_script": REPO_ROOT / "VeOmni" / "final-infer" / "highqual_cot_audio_best_infer_0p6.py",
         "temperature": 0.95,
         "top_p": 0.8,
         "audio_retries": 3,
@@ -41,9 +33,6 @@ BEST_MODEL_SPECS = {
         "checkpoint_path": INFER_ROOT / "models" / "best_1p7",
         "hf_model_dir": INFER_ROOT / "models" / "best_1p7" / "hf_ckpt",
         "tokenizer_path": INFER_ROOT / "models" / "best_1p7" / "hf_ckpt",
-        "family": "1p7",
-        "tag": "1p7_single_best",
-        "normal_script": REPO_ROOT / "VeOmni" / "final-infer" / "highqual_cot_audio_best_infer.py",
         "temperature": 0.6,
         "top_p": 0.8,
         "audio_retries": 2,
@@ -347,224 +336,3 @@ def write_failure_artifacts(
         mode="failed",
     )
     write_result_manifest(output_dir / manifest_name, result)
-
-
-def build_single_case_dataset(
-    *,
-    dataset_root: Path,
-    language: str,
-    sample_id: str,
-    history_audio_path: Path,
-    reference_audio_path: Path,
-    target_text: str,
-    cot_text: str | None = None,
-) -> dict[str, Path]:
-    lang_root = dataset_root / language
-    his_dir = lang_root / "his_audio_denoise"
-    ref_dir = lang_root / "ref_audio"
-    text_dir = lang_root / "target_text_qwen"
-    cot_dir = lang_root / "cot"
-    for path in (his_dir, ref_dir, text_dir):
-        path.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(history_audio_path, his_dir / f"{sample_id}{history_audio_path.suffix or '.wav'}")
-    shutil.copy2(reference_audio_path, ref_dir / f"{sample_id}{reference_audio_path.suffix or '.wav'}")
-
-    history_dst = his_dir / f"{sample_id}.wav"
-    ref_dst = ref_dir / f"{sample_id}.wav"
-    if history_dst.name != f"{sample_id}{history_audio_path.suffix or '.wav'}":
-        shutil.copy2(history_audio_path, history_dst)
-    if ref_dst.name != f"{sample_id}{reference_audio_path.suffix or '.wav'}":
-        shutil.copy2(reference_audio_path, ref_dst)
-    text_path = text_dir / f"{sample_id}.txt"
-    text_path.write_text(target_text.strip() + "\n", encoding="utf-8")
-    cot_path = None
-    if cot_text is not None:
-        cot_dir.mkdir(parents=True, exist_ok=True)
-        cot_path = cot_dir / f"{sample_id}.txt"
-        cot_path.write_text(cot_text.strip() + "\n", encoding="utf-8")
-    return {
-        "lang_root": lang_root,
-        "history_path": history_dst,
-        "reference_path": ref_dst,
-        "text_path": text_path,
-        "cot_path": cot_path,
-    }
-
-
-def visible_device_env(device: str) -> tuple[dict[str, str], str]:
-    env = os.environ.copy()
-    env.setdefault("TOKENIZERS_PARALLELISM", "false")
-    env.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
-    if device.startswith("cuda:"):
-        index = device.split(":", 1)[1]
-        env["CUDA_VISIBLE_DEVICES"] = index
-        return env, "cuda:0"
-    return env, device
-
-
-def write_model_spec_json(*, model_size: str, path: Path) -> list[dict[str, str | int]]:
-    spec = model_spec(model_size)
-    payload = [
-        {
-            "family": str(spec["family"]),
-            "run_name": "single_infer",
-            "tag": str(spec["tag"]),
-            "checkpoint_path": str(spec["checkpoint_path"]),
-            "infer_script": str(spec["normal_script"]),
-            "workers_per_gpu": 1,
-        }
-    ]
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    return payload
-
-
-def run_formal_infer(
-    *,
-    model_size: str,
-    mode: str,
-    data_root: Path,
-    output_root: Path,
-    language: str,
-    sample_id: str | None = None,
-    device: str,
-    history_mode: str,
-    torch_dtype: str,
-    attn_implementation: str,
-    temperature: float,
-    top_p: float,
-    cot_max_new_tokens: int | None,
-    audio_max_new_tokens: int,
-    cot_min_new_tokens: int | None = None,
-    audio_min_new_tokens: int = 256,
-    do_sample: bool = True,
-    repetition_penalty: float = 1.0,
-    no_repeat_ngram_size: int = 0,
-    cot_retries: int | None = None,
-    audio_retries: int | None = None,
-    max_semantic_tokens: int = 0,
-    global_source: str = "ref",
-    sample_rate: int = 16000,
-    overwrite: bool = True,
-    run_log_path: Path | None = None,
-) -> list[str]:
-    spec = model_spec(model_size)
-    env, _ = visible_device_env(device)
-    if mode == "normal":
-        model_specs_json = output_root.parent / "single_model_spec.json"
-        write_model_spec_json(model_size=model_size, path=model_specs_json)
-        cmd = [
-            str(VEOMNI_ENV_PYTHON),
-            str(FINAL_INFER_NEW_DIR / "run_stage3_top3x2_full_infer.py"),
-            "--python-bin",
-            str(VEOMNI_ENV_PYTHON),
-            "--data-root",
-            str(data_root),
-            "--run-root",
-            str(output_root.parent / "_runner"),
-            "--output-root",
-            str(output_root),
-            "--log-dir",
-            str(output_root.parent / "_runner_logs"),
-            "--model-specs-json",
-            str(model_specs_json),
-            "--gpu-ids",
-            "0",
-            "--workers-per-gpu",
-            "1",
-            "--languages",
-            language,
-            "--limit",
-            "1",
-            "--audio-retries",
-            str(audio_retries if audio_retries is not None else spec["audio_retries"]),
-            "--worker-launch-retries",
-            "2",
-        ]
-        if overwrite:
-            cmd.append("--overwrite")
-    else:
-        fixed_evalset_tsv = output_root.parent / "single_fixed_evalset.tsv"
-        eval_id = sample_id if sample_id else data_root.name
-        fixed_evalset_tsv.write_text(f"eval_id\tlanguage\n{eval_id}\t{language}\n", encoding="utf-8")
-        cmd = [
-            str(VEOMNI_ENV_PYTHON),
-            str(FINAL_INFER_NEW_DIR / "run_edit_best_model_on_fixed_evalset.py"),
-            "--gt-root",
-            str(data_root),
-            "--fixed-evalset-tsv",
-            str(fixed_evalset_tsv),
-            "--output-root",
-            str(output_root),
-            "--python-bin",
-            str(VEOMNI_ENV_PYTHON),
-            "--infer-script",
-            str(spec["edit_script"]),
-            "--checkpoint-path",
-            str(spec["checkpoint_path"]),
-            "--languages",
-            language,
-            "--gpu-ids",
-            "0",
-            "--workers-per-gpu",
-            "1",
-            "--device",
-            "cuda:0" if device.startswith("cuda") else device,
-            "--torch-dtype",
-            torch_dtype,
-            "--attn-implementation",
-            attn_implementation,
-            "--history-mode",
-            history_mode,
-            "--audio-max-new-tokens",
-            str(audio_max_new_tokens),
-            "--audio-min-new-tokens",
-            str(audio_min_new_tokens),
-            "--temperature",
-            str(temperature),
-            "--top-p",
-            str(top_p),
-            "--seed",
-            "42",
-        ]
-        if overwrite:
-            cmd.append("--overwrite")
-    if run_log_path is not None:
-        run_log_path.parent.mkdir(parents=True, exist_ok=True)
-        with run_log_path.open("w", encoding="utf-8") as handle:
-            subprocess.run(cmd, check=True, env=env, stdout=handle, stderr=subprocess.STDOUT)
-    else:
-        subprocess.run(cmd, check=True, env=env)
-    return cmd
-
-
-def collect_formal_outputs(output_root: Path, model_size: str, language: str, sample_id: str) -> tuple[Path, Path]:
-    tag = str(model_spec(model_size)["tag"])
-    cot_path = output_root / tag / language / "cot" / f"{sample_id}.txt"
-    wav_path = output_root / tag / language / "wav" / f"{sample_id}.wav"
-    if not cot_path.exists():
-        raise FileNotFoundError(f"Generated COT not found: {cot_path}")
-    if not wav_path.exists():
-        raise FileNotFoundError(f"Generated wav not found: {wav_path}")
-    return cot_path, wav_path
-
-
-def collect_edit_only_output(output_root: Path, language: str, sample_id: str) -> tuple[Path, Path]:
-    cot_path = output_root / language / "cot" / f"{sample_id}.txt"
-    wav_path = output_root / language / "wav" / f"{sample_id}.wav"
-    if not cot_path.exists():
-        raise FileNotFoundError(f"Edited COT output not found: {cot_path}")
-    if not wav_path.exists():
-        raise FileNotFoundError(f"Generated wav not found: {wav_path}")
-    return cot_path, wav_path
-
-
-def wait_for_manual_edit(target_path: Path) -> None:
-    if not target_path.exists():
-        raise FileNotFoundError(target_path)
-    initial_mtime_ns = target_path.stat().st_mtime_ns
-    print(f"[waiting] Edit and save: {target_path}", flush=True)
-    input("[waiting] After saving the txt file, press Enter here to continue.")
-    current_mtime_ns = target_path.stat().st_mtime_ns
-    if current_mtime_ns == initial_mtime_ns:
-        print("[warning] File timestamp did not change. Continuing with current file contents.", flush=True)
