@@ -16,7 +16,8 @@ progressively.
 | ---  | --- |
 | Challenge proposal | [https://arxiv.org/abs/2606.21933](https://arxiv.org/abs/2606.21933) |
 | Challenge website | [https://iscslp2026-cot-tts.github.io/challenge-website/](https://iscslp2026-cot-tts.github.io/challenge-website/) |
-| Challenge dataset | [https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
+| Training Dataset | [https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
+| Open-source model | [https://github.com/LuckyBian/COT-TTS/tree/main/infer](https://github.com/LuckyBian/COT-TTS/tree/main/infer) |
 | Challenge baseline | [https://github.com/iscslp2026-cot-tts/baseline](https://github.com/iscslp2026-cot-tts/baseline) |
 | Demo page | [https://luckybian.github.io/COT-TTS](https://luckybian.github.io/COT-TTS) |
 
@@ -25,11 +26,9 @@ progressively.
 | Resource | Status |
 | --- | --- |
 | COT-TTS paper | Coming soon |
-| Cascaded system | Coming soon |
-| Full dataset | Coming soon |
+| Training code | Coming soon |
 | Data processing pipeline | Coming soon |
 | Evaluation data | Coming soon |
-| Evaluation protocols and metrics | Coming soon |
 
 ## Demo Page
 
