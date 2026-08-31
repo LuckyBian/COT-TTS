@@ -22,6 +22,7 @@ The demo page gives a lightweight overview of the project and provides listening
 - Challenge website: https://iscslp2026-cot-tts.github.io/challenge-website/
 - Training Dataset: https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS
 - Open-source model: https://github.com/LuckyBian/COT-TTS/tree/main/infer
+- Training code: https://github.com/LuckyBian/COT-TTS/tree/main/train
 - Challenge baseline: https://github.com/iscslp2026-cot-tts/baseline
 
 ## Local Preview
