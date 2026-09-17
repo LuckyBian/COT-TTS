@@ -17,7 +17,7 @@ progressively.
 | Challenge proposal | [https://arxiv.org/abs/2606.21933](https://arxiv.org/abs/2606.21933) |
 | Challenge website | [https://iscslp2026-cot-tts.github.io/challenge-website/](https://iscslp2026-cot-tts.github.io/challenge-website/) |
 | Training Dataset | [https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS) |
-| Open-source model | [https://github.com/LuckyBian/COT-TTS/tree/main/infer](https://github.com/LuckyBian/COT-TTS/tree/main/infer) |
+| Infer code | [https://github.com/LuckyBian/COT-TTS/tree/main/infer](https://github.com/LuckyBian/COT-TTS/tree/main/infer) |
 | Training code | [https://github.com/LuckyBian/COT-TTS/tree/main/train](https://github.com/LuckyBian/COT-TTS/tree/main/train) |
 | Challenge baseline | [https://github.com/iscslp2026-cot-tts/baseline](https://github.com/iscslp2026-cot-tts/baseline) |
 | Demo page | [https://luckybian.github.io/COT-TTS](https://luckybian.github.io/COT-TTS) |
