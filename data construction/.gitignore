@@ -1,0 +1,35 @@
+# Python/runtime artifacts
+__pycache__/
+*.py[cod]
+.cache/
+
+# Generated outputs
+data/audio_list.tsv
+data/audios/*
+!data/audios/.gitkeep
+test/json/*.json
+test/json_all/*.json
+test/segment/*.wav
+test/frcrn/*.tsv
+test/segment_denoised/*.wav
+test/emotion/*.txt
+test/json_all_emo/*.json
+test/metrics/*.tsv
+test/json_all_audio_features/*.json
+test/json_all_reference/*.json
+test/json_all_scenes/*.json
+test/json_all_scenes/*.log
+test/json_all_scene_speakers/*.json
+test/json_all_cot/*.json
+test/json_all_cot/*.log
+voiceprint/
+
+# Local model weights/resources. See README.md for download paths.
+model/**
+!model/
+!model/**/
+!model/**/.gitkeep
+
+# Large local model folders that should not be committed.
+DeepSeek/
+llm/
