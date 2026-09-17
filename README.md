@@ -21,14 +21,9 @@ progressively.
 | Training code | [https://github.com/LuckyBian/COT-TTS/tree/main/train](https://github.com/LuckyBian/COT-TTS/tree/main/train) |
 | Challenge baseline | [https://github.com/iscslp2026-cot-tts/baseline](https://github.com/iscslp2026-cot-tts/baseline) |
 | Demo page | [https://luckybian.github.io/COT-TTS](https://luckybian.github.io/COT-TTS) |
-
-## Coming Soon
-
-| Resource | Status |
-| --- | --- |
-| COT-TTS paper | Coming soon |
-| Data processing pipeline | Coming soon |
-| Evaluation data | Coming soon |
+| COT-TTS paper | [https://github.com/LuckyBian/COT-TTS/blob/main/TASLP_2026_Final.pdf](https://github.com/LuckyBian/COT-TTS/blob/main/TASLP_2026_Final.pdf) |
+| Data processing pipeline | [https://github.com/LuckyBian/COT-TTS/tree/main/data%20construction](https://github.com/LuckyBian/COT-TTS/tree/main/data%20construction) |
+| Evaluation data | [https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS/tree/main/eval-dataset](https://huggingface.co/datasets/HKUSTAudio/ISCSLP2026-CoT-TTS/tree/main/eval-dataset) |
 
 ## Demo Page
 
