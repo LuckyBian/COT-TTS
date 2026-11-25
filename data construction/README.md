@@ -2,6 +2,12 @@
 
 This repository contains an audio annotation pipeline for speaker diarization, ASR, segment cutting, denoising, emotion/audio-feature annotation, scene splitting, scene-local speaker normalization, and COT annotation.
 
+## Relationship to the Paper
+
+The CoT annotations used in the paper were generated using HKGAI-V1. For public reproducibility, this repository provides an alternative implementation using DeepSeek-R1-Distill-Qwen-14B as the CoT annotation backend. We do not redistribute HKGAI-V1 weights.
+
+The public implementation follows the same annotation objectives and output schema, but uses a different LLM backend. Its generated annotations may therefore differ from those used in the paper; it should not be interpreted as an exact reproduction of the original annotations.
+
 Large model files and generated data are not included. Put input audio under `data/audios/`, download the required models into `model/`, then run the commands below from the repository root.
 
 ## Environments
@@ -248,7 +254,7 @@ For example, speakers `Speaker-23`, `Speaker-14`, and `Speaker-5` in the same sc
 
 ### 10. COT Annotation
 
-Generate COT annotations using text, `emo-tag`, scene context, and `audio_features`.
+Generate CoT annotations using DeepSeek-R1-Distill-Qwen-14B as the publicly available alternative backend, conditioned on text, `emo-tag`, scene context, and `audio_features`. The original annotations used in the paper were generated with HKGAI-V1, as explained above.
 
 ```bash
 python post_processing/cot_with_audio_features_vllm.py
