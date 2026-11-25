@@ -142,6 +142,114 @@
     `;
   }
 
+  function renderAudiobook() {
+    const container = document.getElementById('audiobookDemo');
+    const audiobook = window.AUDIOBOOK_DEMO_DATA;
+    if (!container || !audiobook) return;
+
+    const original = audiobook.clips.slice(0, audiobook.original_count);
+    const generated = audiobook.clips.slice(audiobook.original_count);
+    const transition = original.reduce((sum, clip) => sum + clip.duration, 0);
+    const total = audiobook.clips.reduce((sum, clip) => sum + clip.duration, 0);
+    const timeLabel = (seconds) => `${Math.floor(seconds / 60)}:${(seconds % 60).toFixed(2).padStart(5, '0')}`;
+
+    container.innerHTML = `
+      <div class="audiobook-full">
+        <div>
+          <h3>Listen to the full passage</h3>
+          <p>Original audiobook: 0:00–${timeLabel(transition)}<br>COT-TTS continuation: ${timeLabel(transition)}–${timeLabel(total)}</p>
+        </div>
+        <div class="audiobook-full-player">
+          ${renderAudio(audiobook.full_audio, 'Full audiobook passage: four original sentences followed by six COT-TTS sentences')}
+          <p id="audiobookPlaybackStatus">4 original sentences · 6 generated sentences</p>
+        </div>
+      </div>
+      <div class="audiobook-group-heading">
+        <h3>Original audiobook</h3>
+        <p>Sentences 1–4 · Initial history and speaker reference</p>
+      </div>
+      <div class="audiobook-original-grid">
+        ${original.map((clip) => `
+          <article class="audiobook-sentence audiobook-original" data-sentence="${clip.number}">
+            <div class="audiobook-sentence-heading">
+              <h4>Sentence ${clip.number}</h4>
+              <span class="audiobook-source">Original</span>
+            </div>
+            ${renderAudio(clip.audio, `Original audiobook sentence ${clip.number}`)}
+          </article>
+        `).join('')}
+      </div>
+      <div class="audiobook-group-heading">
+        <h3>COT-TTS continuation</h3>
+        <p>Sentences 5–10 · All preceding sentences are retained as history</p>
+      </div>
+      <div class="audiobook-generated-grid">
+        ${generated.map((clip, index) => `
+          <article class="audiobook-sentence audiobook-generated" data-sentence="${clip.number}">
+            <div class="audiobook-sentence-heading">
+              <h4>Sentence ${clip.number}</h4>
+              <span class="audiobook-source">COT-TTS</span>
+            </div>
+            <p class="audiobook-history-label">History: sentences 1–${clip.number - 1}</p>
+            <p class="audiobook-history-note">4 original sentences${index ? ` + ${index} generated ${index === 1 ? 'sentence' : 'sentences'}` : ''}</p>
+            <div class="audiobook-output">
+              <span>Generated audio</span>
+              ${renderAudio(clip.audio, `COT-TTS generated sentence ${clip.number}`)}
+            </div>
+            <details class="audiobook-history">
+              <summary>Listen to accumulated history</summary>
+              ${renderAudio(clip.history_audio, `Accumulated history for sentence ${clip.number}: sentences 1 through ${clip.number - 1}`)}
+            </details>
+          </article>
+        `).join('')}
+      </div>
+    `;
+
+    const fullPlayer = container.querySelector('.audiobook-full audio');
+    const playbackStatus = document.getElementById('audiobookPlaybackStatus');
+    const sentenceCards = [...container.querySelectorAll('[data-sentence]')];
+    const clearCurrentSentence = () => {
+      sentenceCards.forEach((card) => card.removeAttribute('aria-current'));
+    };
+
+    function updateCurrentSentence() {
+      let elapsed = 0;
+      const current = audiobook.clips.find((clip) => {
+        elapsed += clip.duration;
+        return fullPlayer.currentTime < elapsed;
+      }) || audiobook.clips[audiobook.clips.length - 1];
+      sentenceCards.forEach((card) => {
+        if (Number(card.dataset.sentence) === current.number) {
+          card.setAttribute('aria-current', 'true');
+        } else {
+          card.removeAttribute('aria-current');
+        }
+      });
+      const source = current.number <= audiobook.original_count ? 'Original audiobook' : 'COT-TTS continuation';
+      playbackStatus.textContent = `${source} · Sentence ${current.number} of ${audiobook.clips.length}`;
+    }
+
+    fullPlayer.addEventListener('timeupdate', updateCurrentSentence);
+    fullPlayer.addEventListener('seeking', updateCurrentSentence);
+    fullPlayer.addEventListener('ended', () => {
+      clearCurrentSentence();
+      playbackStatus.textContent = 'Full passage complete · 4 original sentences · 6 generated sentences';
+    });
+    container.querySelectorAll('audio').forEach((player) => {
+      player.addEventListener('play', () => {
+        container.querySelectorAll('audio').forEach((other) => {
+          if (other !== player) other.pause();
+        });
+        if (player === fullPlayer) {
+          updateCurrentSentence();
+        } else {
+          clearCurrentSentence();
+          playbackStatus.textContent = '4 original sentences · 6 generated sentences';
+        }
+      });
+    });
+  }
+
   function renderControlDefaultCell(item) {
     return `
       <div class="control-default">
@@ -319,6 +427,7 @@
   }
 
   renderFeatured();
+  renderAudiobook();
   renderControlTable();
   renderEmotionTable();
   render();
