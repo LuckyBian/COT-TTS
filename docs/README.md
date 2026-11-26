@@ -50,6 +50,19 @@ index.html
 
 No backend or build step is required.
 
+## Fixed Neutral Reference Demo
+
+Between the emotion showcase and the Demo Table, this section presents five
+Chinese and five English examples. Each language group shares one neutral
+reference recording for global-token conditioning, alongside each case's
+historical audio, target text, and generated output. The comparison highlights
+expressive variation across dialogue contexts while the reference stays fixed.
+
+`neutral-reference-demo-data.js` defines the selected cases. Audio files in
+`neutral-reference/` are copied unchanged from the manually curated
+`non-emo-ref-selected` folder; the page uses its five remaining audio pairs per
+language rather than its older selection manifest.
+
 ## Audiobook Continuation Demo
 
 The audiobook section sits between the representative cases and editable control demos.

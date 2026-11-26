@@ -203,6 +203,25 @@
         </div>
       </section>
 
+      <section class="neutral-card" aria-labelledby="neutralReferenceTitle">
+        <div class="neutral-heading">
+          <p class="eyebrow">Fixed neutral reference</p>
+          <h2 id="neutralReferenceTitle">One neutral reference, different expressive styles</h2>
+          <p>
+            Within each language, all five examples use the same neutral reference
+            audio for global-token conditioning. Listen to how the generated
+            speech responds to different dialogue histories while the reference
+            remains unchanged.
+          </p>
+        </div>
+        <div id="neutralReferenceDemos" class="neutral-groups"></div>
+        <p class="neutral-note">
+          Expressive variation with a fixed neutral reference supports inferring
+          emotion and speaking style from dialogue context, rather than copying
+          them from the reference audio.
+        </p>
+      </section>
+
       <section class="table-card">
         <div class="table-title">
           <div>
@@ -230,6 +249,7 @@
     <script src="./audiobook-demo-data.js"></script>
     <script src="./control-demo-data.js"></script>
     <script src="./emotion-demo-data.js"></script>
+    <script src="./neutral-reference-demo-data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

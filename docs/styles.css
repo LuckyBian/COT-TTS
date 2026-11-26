@@ -845,6 +845,145 @@ h2 {
   text-align: center;
 }
 
+.neutral-card {
+  margin-bottom: 1rem;
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: rgba(255, 253, 247, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.neutral-heading {
+  max-width: 880px;
+  margin-bottom: 1.4rem;
+}
+
+.neutral-heading .eyebrow {
+  margin-bottom: 0.65rem;
+}
+
+.neutral-heading h2 {
+  line-height: 1.2;
+}
+
+.neutral-heading > p:last-child,
+.neutral-note {
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.neutral-heading > p:last-child {
+  margin: 0.8rem 0 0;
+}
+
+.neutral-groups {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.neutral-language {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+}
+
+.neutral-reference {
+  padding: 1.25rem;
+  border-right: 1px solid var(--line);
+  background: rgba(125, 155, 123, 0.12);
+}
+
+.neutral-reference h3 {
+  margin: 0 0 1.2rem;
+  font-size: 1.25rem;
+}
+
+.neutral-reference-label,
+.neutral-label {
+  color: var(--sage-dark);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.neutral-reference-label {
+  margin: 0 0 0.75rem;
+}
+
+.neutral-reference-note {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.neutral-cases,
+.neutral-case-text,
+.neutral-player {
+  min-width: 0;
+}
+
+.neutral-case {
+  padding: 1rem 1.2rem;
+}
+
+.neutral-case + .neutral-case {
+  border-top: 1px solid var(--line);
+}
+
+.neutral-case-id {
+  float: right;
+  margin: 0 0 0.4rem 0.8rem;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.neutral-case-text p {
+  margin: 0.4rem 0 0.9rem;
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.neutral-audio-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  clear: both;
+}
+
+.neutral-player {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.neutral-card audio {
+  display: block;
+  max-width: none;
+}
+
+.neutral-output {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(125, 155, 123, 0.45);
+}
+
+.neutral-note {
+  margin: 1rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--sage);
+  font-size: 0.875rem;
+}
+
 .table-card {
   overflow: hidden;
   border: 1px solid rgba(223, 214, 194, 0.92);
@@ -1085,6 +1224,19 @@ audio {
 }
 
 @media (max-width: 900px) {
+  .neutral-language {
+    grid-template-columns: 1fr;
+  }
+
+  .neutral-reference {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .neutral-reference audio {
+    max-width: 400px;
+  }
+
   .audiobook-heading {
     display: block;
   }
@@ -1162,6 +1314,30 @@ audio {
 }
 
 @media (max-width: 600px) {
+  .neutral-card {
+    padding: 1rem;
+  }
+
+  .neutral-case,
+  .neutral-reference {
+    padding: 1rem;
+  }
+
+  .neutral-audio-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .neutral-output {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .neutral-case-id {
+    display: block;
+    float: none;
+    margin: 0 0 0.5rem;
+  }
+
   .audiobook-full,
   .audiobook-original-grid,
   .audiobook-generated-grid {

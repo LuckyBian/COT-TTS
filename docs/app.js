@@ -392,6 +392,51 @@
       .join('');
   }
 
+  function renderNeutralReferenceDemos() {
+    const container = document.getElementById('neutralReferenceDemos');
+    const groups = window.NEUTRAL_REFERENCE_DEMO_DATA?.groups;
+    if (!container || !groups) return;
+
+    container.innerHTML = groups.map((group) => `
+      <section class="neutral-language" aria-labelledby="neutral-${escapeHtml(group.language)}-title">
+        <div class="neutral-reference">
+          <h3 id="neutral-${escapeHtml(group.language)}-title">${languageName(group.language)}</h3>
+          <p class="neutral-reference-label">Shared neutral reference</p>
+          ${renderAudio(group.reference_audio, `${languageName(group.language)} neutral reference shared by all five examples`)}
+          <p class="neutral-reference-note">The same reference audio is used for every output in this group.</p>
+        </div>
+        <div class="neutral-cases">
+          ${group.items.map((item) => `
+            <article class="neutral-case" aria-label="${escapeHtml(item.eval_id)}">
+              <div class="neutral-case-text">
+                <span class="neutral-case-id">${escapeHtml(item.eval_id)}</span>
+                <span class="neutral-label">Target text</span>
+                <p lang="${escapeHtml(group.language)}">${escapeHtml(item.target_text)}</p>
+              </div>
+              <div class="neutral-audio-pair">
+                <div class="neutral-player">
+                  <span class="neutral-label">Historical audio</span>
+                  ${renderAudio(item.history_audio, `${item.eval_id} historical dialogue audio`)}
+                </div>
+                <div class="neutral-player neutral-output">
+                  <span class="neutral-label">Output audio</span>
+                  ${renderAudio(item.output_audio, `${item.eval_id} generated output with the shared neutral reference`)}
+                </div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    `).join('');
+
+    container.addEventListener('play', (event) => {
+      if (event.target.tagName !== 'AUDIO') return;
+      document.querySelectorAll('audio').forEach((player) => {
+        if (player !== event.target) player.pause();
+      });
+    }, true);
+  }
+
   function render() {
     const visibleItems = data.items || [];
     tableBody.innerHTML = visibleItems.map(renderRow).join('');
@@ -430,5 +475,6 @@
   renderAudiobook();
   renderControlTable();
   renderEmotionTable();
+  renderNeutralReferenceDemos();
   render();
 })();
