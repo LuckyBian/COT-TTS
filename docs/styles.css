@@ -984,6 +984,73 @@ h2 {
   font-size: 0.875rem;
 }
 
+.history-ablation-groups,
+.history-ablation-cases {
+  display: grid;
+  gap: 1rem;
+}
+
+.history-ablation-groups {
+  gap: 1.5rem;
+}
+
+.history-ablation-language h3 {
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.25rem;
+}
+
+.history-ablation-case {
+  min-width: 0;
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.history-ablation-inputs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  clear: both;
+  padding-bottom: 1rem;
+}
+
+.history-ablation-outputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.history-condition {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(223, 214, 194, 0.12);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.history-condition-correct {
+  border-color: var(--sage);
+  background: rgba(125, 155, 123, 0.1);
+}
+
+.history-condition h4 {
+  margin: 0;
+  color: var(--sage-dark);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.history-condition p {
+  margin: 0.35rem 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
 .table-card {
   overflow: hidden;
   border: 1px solid rgba(223, 214, 194, 0.92);
@@ -1224,6 +1291,10 @@ audio {
 }
 
 @media (max-width: 900px) {
+  .history-ablation-outputs {
+    grid-template-columns: 1fr;
+  }
+
   .neutral-language {
     grid-template-columns: 1fr;
   }
@@ -1314,6 +1385,14 @@ audio {
 }
 
 @media (max-width: 600px) {
+  .history-ablation-case {
+    padding: 1rem;
+  }
+
+  .history-ablation-inputs {
+    grid-template-columns: 1fr;
+  }
+
   .neutral-card {
     padding: 1rem;
   }

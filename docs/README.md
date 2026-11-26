@@ -50,9 +50,26 @@ index.html
 
 No backend or build step is required.
 
+## History Condition Comparison
+
+Between the emotion showcase and the fixed neutral reference section,
+`history-ablation-demo-data.js` defines two Chinese and two English cases
+selected by the user. Each case includes its target text, reference audio,
+original historical audio, and outputs under correct, absent, and mismatched
+history. The reference and target text are kept fixed within each comparison.
+The original history player belongs to the correct-history condition only.
+
+The 20 audio files in `history-ablation/` originate from `relaxed-15`; subsequent
+local audio edits are preserved. Mismatched donor IDs and current SHA256 values are recorded in
+`history-ablation/manifest.json`. Selection follows the user's handwritten IDs and subsequent removals,
+not the full candidate pool. The source annotations are not uniformly strict:
+`eval-zh-1036786` and `eval-en-370534` have moderate reference style. The page
+therefore describes a comparison with fixed text/reference rather than claiming
+that all references are entirely neutral or that every expressive cue is absent.
+
 ## Fixed Neutral Reference Demo
 
-Between the emotion showcase and the Demo Table, this section presents five
+Between the history comparison and the Demo Table, this section presents five
 Chinese and five English examples. Each language group shares one neutral
 reference recording for global-token conditioning, alongside each case's
 historical audio, target text, and generated output. The comparison highlights

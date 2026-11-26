@@ -1,0 +1,227 @@
+{
+  "source_directory": "/Users/bianweizhenbian/Desktop/relaxed-15",
+  "selection_image": "/Users/bianweizhenbian/Desktop/01675907d4523de2cc4ac5d54849b96b.jpg",
+  "counts": {
+    "zh": 2,
+    "en": 2
+  },
+  "cases": [
+    {
+      "eval_id": "eval-zh-454299",
+      "language": "zh",
+      "history_donor_id": "eval-zh-643737",
+      "source_selection": {
+        "language": "zh",
+        "eval_id": "eval-zh-454299",
+        "tier": "A_original_strict",
+        "original_strict_selected": true,
+        "reference_emotion_salience": 0,
+        "reference_style_salience": 0,
+        "output_emotion_salience": 3,
+        "output_style_salience": 3,
+        "emotion_contrast": 3,
+        "text_salience": 0,
+        "reference_neutral_probability": 0.999921441078186,
+        "output_emotion_probability": 0.8461361527442932,
+        "reference_emotion": "平静",
+        "output_emotion": "紧迫",
+        "relaxation_notes": "原严格条件通过",
+        "interpretation": "自动候选，需试听；放宽版不等于全部满足原严格条件",
+        "history_audio": "his/eval-zh-454299.wav",
+        "reference_audio": "ref/eval-zh-454299.wav",
+        "output_audio": "output/eval-zh-454299.wav",
+        "directory": "metadata/zh/eval-zh-454299"
+      },
+      "files": {
+        "reference_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/reference.wav",
+          "source": "ref/eval-zh-454299.wav",
+          "sha256": "8b7a6b1833158904cb21e95dcace62c290a721059103868b9a341b6cd48d545d"
+        },
+        "history_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/history.wav",
+          "source": "his/eval-zh-454299.wav",
+          "sha256": "21bca737f95baf6d153e5f8f53a0d21b1e81f7213b42fd5379167a09667cb867"
+        },
+        "output_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/output.wav",
+          "source": "output/eval-zh-454299.wav",
+          "sha256": "37b17fdecb3aaaececb3e244a76fe46190b2109582a91c2792bfd03ae695e0d3"
+        },
+        "no_history_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/no-history.wav",
+          "source": "output-no-history/eval-zh-454299.wav",
+          "sha256": "4f57a0b32a528f7fcb2000599f5669c6f6b9615be453482559cfaddf5a2d64c8"
+        },
+        "mismatched_history_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/mismatched-history.wav",
+          "source": "output-mismatched-history/eval-zh-454299.wav",
+          "sha256": "bc12109c772f4524ceb660004c673028883cf72f2e9ba47abca58df93c27ce23"
+        }
+      }
+    },
+    {
+      "eval_id": "eval-zh-1036786",
+      "language": "zh",
+      "history_donor_id": "eval-zh-216695",
+      "source_selection": {
+        "language": "zh",
+        "eval_id": "eval-zh-1036786",
+        "tier": "B_relaxed_output_or_reference_style",
+        "original_strict_selected": false,
+        "reference_emotion_salience": 1,
+        "reference_style_salience": 2,
+        "output_emotion_salience": 3,
+        "output_style_salience": 3,
+        "emotion_contrast": 2,
+        "text_salience": 0,
+        "reference_neutral_probability": 1.0,
+        "output_emotion_probability": 0.9922352433204651,
+        "reference_emotion": "平静",
+        "output_emotion": "坚定",
+        "relaxation_notes": "允许参考风格评分2（中等）",
+        "interpretation": "自动候选，需试听；放宽版不等于全部满足原严格条件",
+        "history_audio": "his/eval-zh-1036786.wav",
+        "reference_audio": "ref/eval-zh-1036786.wav",
+        "output_audio": "output/eval-zh-1036786.wav",
+        "directory": "metadata/zh/eval-zh-1036786"
+      },
+      "files": {
+        "reference_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/reference.wav",
+          "source": "ref/eval-zh-1036786.wav",
+          "sha256": "6224eed51c1c7829f89754462714ab3c758b4f6595d03726ad6e15c9a4254354"
+        },
+        "history_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/history.wav",
+          "source": "his/eval-zh-1036786.wav",
+          "sha256": "c62eaa24668db0ed754d2e7efd367bc2136a954f7657dfc27dae9d0a052746fc"
+        },
+        "output_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/output.wav",
+          "source": "output/eval-zh-1036786.wav",
+          "sha256": "944bb5ba931fac5a6787be1fd82a10a426c9ae476bdfd09d00e73c583352fa98",
+          "original_copied_sha256": "122604015cd7bffa1e78b6a55caa09695e1c6dc52d10b2637f57eb83c2b76120"
+        },
+        "no_history_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/no-history.wav",
+          "source": "output-no-history/eval-zh-1036786.wav",
+          "sha256": "d12598b454e890fb1ea392b1b932a64701d5ed8295a04933137284292d1c383c"
+        },
+        "mismatched_history_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/mismatched-history.wav",
+          "source": "output-mismatched-history/eval-zh-1036786.wav",
+          "sha256": "379db3eba5dfaa3d835453f1a14d639ac5bc243815c2ac7d3ef035e10c5a9a2a"
+        }
+      }
+    },
+    {
+      "eval_id": "eval-en-232498",
+      "language": "en",
+      "history_donor_id": "eval-en-1540963",
+      "source_selection": {
+        "language": "en",
+        "eval_id": "eval-en-232498",
+        "tier": "A_original_strict",
+        "original_strict_selected": true,
+        "reference_emotion_salience": 0,
+        "reference_style_salience": 0,
+        "output_emotion_salience": 3,
+        "output_style_salience": 3,
+        "emotion_contrast": 3,
+        "text_salience": 0,
+        "reference_neutral_probability": 1.0,
+        "output_emotion_probability": 0.9180179834365845,
+        "reference_emotion": "neutral",
+        "output_emotion": "sarcastic",
+        "relaxation_notes": "原严格条件通过",
+        "interpretation": "自动候选，需试听；放宽版不等于全部满足原严格条件",
+        "history_audio": "his/eval-en-232498.wav",
+        "reference_audio": "ref/eval-en-232498.wav",
+        "output_audio": "output/eval-en-232498.wav",
+        "directory": "metadata/en/eval-en-232498"
+      },
+      "files": {
+        "reference_audio": {
+          "path": "history-ablation/en/eval-en-232498/reference.wav",
+          "source": "ref/eval-en-232498.wav",
+          "sha256": "ecb73321d49cddd6f472b7bf0d2af9f1057c4d973a3df7e394df21628bf41362"
+        },
+        "history_audio": {
+          "path": "history-ablation/en/eval-en-232498/history.wav",
+          "source": "his/eval-en-232498.wav",
+          "sha256": "b1c379406111cd9d17fbfb148e7b26a58117207d6eba4f903e7bce7d5abd9d7a"
+        },
+        "output_audio": {
+          "path": "history-ablation/en/eval-en-232498/output.wav",
+          "source": "output/eval-en-232498.wav",
+          "sha256": "91e98007c529cdecb6819b60f11a899c97412d1ae63028c18891b1e68bc32456"
+        },
+        "no_history_audio": {
+          "path": "history-ablation/en/eval-en-232498/no-history.wav",
+          "source": "output-no-history/eval-en-232498.wav",
+          "sha256": "2e3a96a67a18736b9e21ea9e49e1c1bf929abd9c8e1e96d37c14168bb1f71d32"
+        },
+        "mismatched_history_audio": {
+          "path": "history-ablation/en/eval-en-232498/mismatched-history.wav",
+          "source": "output-mismatched-history/eval-en-232498.wav",
+          "sha256": "5d257e4b91e9d03bd08d77c7f1fc71c4bb8dd9f82e692f6a1e1ed727aec5b0d6"
+        }
+      }
+    },
+    {
+      "eval_id": "eval-en-370534",
+      "language": "en",
+      "history_donor_id": "eval-en-1795553",
+      "source_selection": {
+        "language": "en",
+        "eval_id": "eval-en-370534",
+        "tier": "B_relaxed_output_or_reference_style",
+        "original_strict_selected": false,
+        "reference_emotion_salience": 0,
+        "reference_style_salience": 2,
+        "output_emotion_salience": 3,
+        "output_style_salience": 3,
+        "emotion_contrast": 3,
+        "text_salience": 0,
+        "reference_neutral_probability": 0.9999644756317139,
+        "output_emotion_probability": 0.9962211847305298,
+        "reference_emotion": "neutral",
+        "output_emotion": "angry",
+        "relaxation_notes": "允许参考风格评分2（中等）",
+        "interpretation": "自动候选，需试听；放宽版不等于全部满足原严格条件",
+        "history_audio": "his/eval-en-370534.wav",
+        "reference_audio": "ref/eval-en-370534.wav",
+        "output_audio": "output/eval-en-370534.wav",
+        "directory": "metadata/en/eval-en-370534"
+      },
+      "files": {
+        "reference_audio": {
+          "path": "history-ablation/en/eval-en-370534/reference.wav",
+          "source": "ref/eval-en-370534.wav",
+          "sha256": "5697189532078b93ce5ded55ce56203e483614fe209fe101cbc6a2f11009f580"
+        },
+        "history_audio": {
+          "path": "history-ablation/en/eval-en-370534/history.wav",
+          "source": "his/eval-en-370534.wav",
+          "sha256": "2b23bdf6e981a4f9c9dc762f43610a80ffcfb7f23f9b83864e6064e4e4f3a2ea"
+        },
+        "output_audio": {
+          "path": "history-ablation/en/eval-en-370534/output.wav",
+          "source": "output/eval-en-370534.wav",
+          "sha256": "a498ab4369b081c8c27be51e9eabf7e64a2fec52dfac2e82232499ee3bda909b"
+        },
+        "no_history_audio": {
+          "path": "history-ablation/en/eval-en-370534/no-history.wav",
+          "source": "output-no-history/eval-en-370534.wav",
+          "sha256": "4b6e280587dfae81195cbee6434a27288947449c233af680adf2b471995af8db"
+        },
+        "mismatched_history_audio": {
+          "path": "history-ablation/en/eval-en-370534/mismatched-history.wav",
+          "source": "output-mismatched-history/eval-en-370534.wav",
+          "sha256": "69ed60115caf21b6b4f1e30dc72d8ec83a15a4c05479de77384be90667da94f4"
+        }
+      }
+    }
+  ]
+}

@@ -437,6 +437,61 @@
     }, true);
   }
 
+  function renderHistoryAblationDemos() {
+    const container = document.getElementById('historyAblationDemos');
+    const groups = window.HISTORY_ABLATION_DEMO_DATA?.groups;
+    if (!container || !groups) return;
+
+    const conditions = [
+      { key: 'output_audio', title: 'Correct history', note: 'Original dialogue context', className: 'history-condition-correct' },
+      { key: 'no_history_audio', title: 'No history', note: 'Historical audio removed', className: '' },
+      { key: 'mismatched_history_audio', title: 'Mismatched history', note: 'Unrelated dialogue context', className: '' },
+    ];
+
+    container.innerHTML = groups.map((group) => `
+      <section class="history-ablation-language" aria-labelledby="history-ablation-${escapeHtml(group.language)}">
+        <h3 id="history-ablation-${escapeHtml(group.language)}">${languageName(group.language)}</h3>
+        <div class="history-ablation-cases">
+          ${group.items.map((item) => `
+            <article class="history-ablation-case" aria-label="${escapeHtml(item.eval_id)} history comparison">
+              <div class="neutral-case-text">
+                <span class="neutral-case-id">${escapeHtml(item.eval_id)}</span>
+                <span class="neutral-label">Target text · unchanged across conditions</span>
+                <p lang="${escapeHtml(group.language)}">${escapeHtml(item.target_text)}</p>
+              </div>
+              <div class="history-ablation-inputs">
+                <div class="neutral-player">
+                  <span class="neutral-label">Reference audio · unchanged across conditions</span>
+                  ${renderAudio(item.reference_audio, `${item.eval_id} reference audio shared across all three history conditions`)}
+                </div>
+                <div class="neutral-player">
+                  <span class="neutral-label">Original historical audio</span>
+                  ${renderAudio(item.history_audio, `${item.eval_id} original historical audio used in the correct-history condition`)}
+                </div>
+              </div>
+              <div class="history-ablation-outputs">
+                ${conditions.map((condition) => `
+                  <section class="history-condition ${condition.className}" aria-label="${escapeHtml(condition.title)} output">
+                    <h4>${condition.title}</h4>
+                    <p>${condition.note}</p>
+                    ${renderAudio(item[condition.key], `${item.eval_id} output with ${condition.title.toLowerCase()}`)}
+                  </section>
+                `).join('')}
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    `).join('');
+
+    container.addEventListener('play', (event) => {
+      if (event.target.tagName !== 'AUDIO') return;
+      document.querySelectorAll('audio').forEach((player) => {
+        if (player !== event.target) player.pause();
+      });
+    }, true);
+  }
+
   function render() {
     const visibleItems = data.items || [];
     tableBody.innerHTML = visibleItems.map(renderRow).join('');
@@ -476,5 +531,6 @@
   renderControlTable();
   renderEmotionTable();
   renderNeutralReferenceDemos();
+  renderHistoryAblationDemos();
   render();
 })();

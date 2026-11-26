@@ -203,6 +203,21 @@
         </div>
       </section>
 
+      <section class="neutral-card history-ablation-card" aria-labelledby="historyAblationTitle">
+        <div class="neutral-heading">
+          <p class="eyebrow">The role of dialogue history</p>
+          <h2 id="historyAblationTitle">Same text and reference, different history conditions</h2>
+          <p>
+            For each case, the target text and reference audio stay the same.
+            Compare the output with the correct dialogue history, without
+            historical audio, and with an unrelated dialogue history. These
+            examples help reveal how historical context shapes emotional and
+            stylistic delivery beyond the cues in the text and reference.
+          </p>
+        </div>
+        <div id="historyAblationDemos" class="history-ablation-groups"></div>
+      </section>
+
       <section class="neutral-card" aria-labelledby="neutralReferenceTitle">
         <div class="neutral-heading">
           <p class="eyebrow">Fixed neutral reference</p>
@@ -250,6 +265,7 @@
     <script src="./control-demo-data.js"></script>
     <script src="./emotion-demo-data.js"></script>
     <script src="./neutral-reference-demo-data.js"></script>
+    <script src="./history-ablation-demo-data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
