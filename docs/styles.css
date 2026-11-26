@@ -288,24 +288,11 @@ h2 {
   margin-bottom: 0.45rem;
 }
 
-.audiobook-full {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  align-items: center;
-  padding: 1.1rem;
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  background: #f6efe0;
-}
-
-.audiobook-full h3,
 .audiobook-group-heading h3 {
   margin: 0;
   font-size: 1.2rem;
 }
 
-.audiobook-full p,
 .audiobook-group-heading p,
 .audiobook-history-label,
 .audiobook-history-note {
@@ -314,10 +301,6 @@ h2 {
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   font-size: 0.9rem;
   line-height: 1.6;
-}
-
-.audiobook-full-player {
-  min-width: 0;
 }
 
 .audiobook-group-heading {
@@ -353,11 +336,6 @@ h2 {
 
 .audiobook-generated {
   border-top: 3px solid var(--sage);
-}
-
-.audiobook-sentence[aria-current="true"] {
-  outline: 3px solid var(--sage-dark);
-  outline-offset: 2px;
 }
 
 .audiobook-sentence-heading {
@@ -1417,7 +1395,6 @@ audio {
     margin: 0 0 0.5rem;
   }
 
-  .audiobook-full,
   .audiobook-original-grid,
   .audiobook-generated-grid {
     grid-template-columns: 1fr;

@@ -87,8 +87,8 @@ The audiobook section sits between the representative cases and editable control
 001–004 are original audiobook audio used as initial history and speaker reference;
 005–010 are COT-TTS outputs. Each output uses all preceding sentences as history.
 
-The full-passage player concatenates 001–010 without added gaps. Each generated
-sentence also has an expandable player for its accumulated history
+Each sentence has its own audio player. Each generated sentence also has an
+expandable player for its accumulated history
 (`history-before-005.wav` contains 001–004, through
 `history-before-010.wav` containing 001–009). The original sentence clips are
 copied unchanged; concatenated files preserve their 16 kHz mono PCM samples.

@@ -57,6 +57,5 @@ window.AUDIOBOOK_DEMO_DATA = {
       "duration": 4.64,
       "history_audio": "audiobook/history-before-010.wav"
     }
-  ],
-  "full_audio": "audiobook/full-passage.wav"
+  ]
 };
