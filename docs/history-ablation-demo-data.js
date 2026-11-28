@@ -11,7 +11,11 @@ window.HISTORY_ABLATION_DEMO_DATA = {
           "history_audio": "history-ablation/zh/eval-zh-454299/history.wav",
           "output_audio": "history-ablation/zh/eval-zh-454299/output.wav",
           "no_history_audio": "history-ablation/zh/eval-zh-454299/no-history.wav",
-          "mismatched_history_audio": "history-ablation/zh/eval-zh-454299/mismatched-history.wav"
+          "mismatched_history_audio": "history-ablation/zh/eval-zh-454299/mismatched-history.wav",
+          "no_cot_audio": "history-ablation/zh/eval-zh-454299/no-cot.wav",
+          "no_transcription_audio": "history-ablation/zh/eval-zh-454299/no-transcription.wav",
+          "no_cot_no_transcription_audio": "history-ablation/zh/eval-zh-454299/no-cot-no-transcription.wav",
+          "attributes_only_audio": "history-ablation/zh/eval-zh-454299/attributes-only.wav"
         },
         {
           "eval_id": "eval-zh-1036786",
@@ -21,7 +25,12 @@ window.HISTORY_ABLATION_DEMO_DATA = {
           "history_audio": "history-ablation/zh/eval-zh-1036786/history.wav",
           "output_audio": "history-ablation/zh/eval-zh-1036786/output.wav",
           "no_history_audio": "history-ablation/zh/eval-zh-1036786/no-history.wav",
-          "mismatched_history_audio": "history-ablation/zh/eval-zh-1036786/mismatched-history.wav"
+          "mismatched_history_audio": "history-ablation/zh/eval-zh-1036786/mismatched-history.wav",
+          "no_cot_audio": "history-ablation/zh/eval-zh-1036786/no-cot.wav",
+          "no_transcription_audio": "history-ablation/zh/eval-zh-1036786/no-transcription.wav",
+          "no_cot_no_transcription_audio": "history-ablation/zh/eval-zh-1036786/no-cot-no-transcription.wav",
+          "attributes_only_audio": "history-ablation/zh/eval-zh-1036786/attributes-only.wav",
+          "history_note": "The history player is a shortened excerpt. The four model-ablation outputs use the original full dialogue context."
         }
       ]
     },
@@ -36,7 +45,11 @@ window.HISTORY_ABLATION_DEMO_DATA = {
           "history_audio": "history-ablation/en/eval-en-232498/history.wav",
           "output_audio": "history-ablation/en/eval-en-232498/output.wav",
           "no_history_audio": "history-ablation/en/eval-en-232498/no-history.wav",
-          "mismatched_history_audio": "history-ablation/en/eval-en-232498/mismatched-history.wav"
+          "mismatched_history_audio": "history-ablation/en/eval-en-232498/mismatched-history.wav",
+          "no_cot_audio": "history-ablation/en/eval-en-232498/no-cot.wav",
+          "no_transcription_audio": "history-ablation/en/eval-en-232498/no-transcription.wav",
+          "no_cot_no_transcription_audio": "history-ablation/en/eval-en-232498/no-cot-no-transcription.wav",
+          "attributes_only_audio": "history-ablation/en/eval-en-232498/attributes-only.wav"
         },
         {
           "eval_id": "eval-en-370534",
@@ -46,7 +59,11 @@ window.HISTORY_ABLATION_DEMO_DATA = {
           "history_audio": "history-ablation/en/eval-en-370534/history.wav",
           "output_audio": "history-ablation/en/eval-en-370534/output.wav",
           "no_history_audio": "history-ablation/en/eval-en-370534/no-history.wav",
-          "mismatched_history_audio": "history-ablation/en/eval-en-370534/mismatched-history.wav"
+          "mismatched_history_audio": "history-ablation/en/eval-en-370534/mismatched-history.wav",
+          "no_cot_audio": "history-ablation/en/eval-en-370534/no-cot.wav",
+          "no_transcription_audio": "history-ablation/en/eval-en-370534/no-transcription.wav",
+          "no_cot_no_transcription_audio": "history-ablation/en/eval-en-370534/no-cot-no-transcription.wav",
+          "attributes_only_audio": "history-ablation/en/eval-en-370534/attributes-only.wav"
         }
       ]
     }

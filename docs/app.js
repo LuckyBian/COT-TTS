@@ -393,9 +393,13 @@
     if (!container || !groups) return;
 
     const conditions = [
-      { key: 'output_audio', title: 'Correct history', note: 'Original dialogue context', className: 'history-condition-correct' },
+      { key: 'output_audio', title: 'Full model', note: 'Dialogue history, transcription, and full CoT', className: 'history-condition-correct' },
       { key: 'no_history_audio', title: 'No history', note: 'Historical audio removed', className: '' },
       { key: 'mismatched_history_audio', title: 'Mismatched history', note: 'Unrelated dialogue context', className: '' },
+      { key: 'no_cot_audio', title: 'No CoT', note: 'Model trained without CoT content', className: '' },
+      { key: 'no_transcription_audio', title: 'No transcription', note: 'Model trained without history transcription', className: '' },
+      { key: 'no_cot_no_transcription_audio', title: 'No CoT or transcription', note: 'Model trained without either component', className: '' },
+      { key: 'attributes_only_audio', title: 'Attributes only', note: 'CoT retains emotion and acoustic attributes', className: '' },
     ];
 
     container.innerHTML = groups.map((group) => `
@@ -403,7 +407,7 @@
         <h3 id="history-ablation-${escapeHtml(group.language)}">${languageName(group.language)}</h3>
         <div class="history-ablation-cases">
           ${group.items.map((item) => `
-            <article class="history-ablation-case" aria-label="${escapeHtml(item.eval_id)} history comparison">
+            <article class="history-ablation-case" aria-label="${escapeHtml(item.eval_id)} ablation comparison">
               <div class="neutral-case-text">
                 <span class="neutral-case-id">${escapeHtml(item.eval_id)}</span>
                 <span class="neutral-label">Target text · unchanged across conditions</span>
@@ -412,18 +416,21 @@
               <div class="history-ablation-inputs">
                 <div class="neutral-player">
                   <span class="neutral-label">Reference audio · unchanged across conditions</span>
-                  ${renderAudio(item.reference_audio, `${item.eval_id} reference audio shared across all three history conditions`)}
+                  ${renderAudio(item.reference_audio, `${item.eval_id} reference audio shared across the ablation conditions`)}
                 </div>
                 <div class="neutral-player">
                   <span class="neutral-label">Original historical audio</span>
-                  ${renderAudio(item.history_audio, `${item.eval_id} original historical audio used in the correct-history condition`)}
+                  ${renderAudio(item.history_audio, `${item.eval_id} historical dialogue for the full-model example`)}
                 </div>
               </div>
+              ${item.history_note ? `<p class="history-ablation-note">${escapeHtml(item.history_note)}</p>` : ''}
               <div class="history-ablation-outputs">
                 ${conditions.map((condition) => `
                   <section class="history-condition ${condition.className}" aria-label="${escapeHtml(condition.title)} output">
-                    <h4>${condition.title}</h4>
-                    <p>${condition.note}</p>
+                    <div class="history-condition-copy">
+                      <h4>${condition.title}</h4>
+                      <p>${condition.note}</p>
+                    </div>
                     ${renderAudio(item[condition.key], `${item.eval_id} output with ${condition.title.toLowerCase()}`)}
                   </section>
                 `).join('')}

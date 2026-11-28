@@ -57,8 +57,50 @@
           "path": "history-ablation/zh/eval-zh-454299/mismatched-history.wav",
           "source": "output-mismatched-history/eval-zh-454299.wav",
           "sha256": "bc12109c772f4524ceb660004c673028883cf72f2e9ba47abca58df93c27ce23"
+        },
+        "no_cot_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/no-cot.wav",
+          "source": "output-no-cot/eval-zh-454299.wav",
+          "sha256": "8a72d842b3a34e6399e340db34fa04f825371230c69cec8525c445f139d52413",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot/normal/infer_outputs/no_cot_0p6_step19056_normal/zh/meta/eval-zh-454299.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot/outputs/stage3/20261110_111947/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 64,
+          "under_used_in_speech_context": true
+        },
+        "no_transcription_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/no-transcription.wav",
+          "source": "output-no-trans/eval-zh-454299.wav",
+          "sha256": "b2cc575439bbb649ac33c5e3c9c07bec4c2a2794af5f7ec6558f3ec7ae9b9fb8",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-trans/normal/infer_outputs/no_trans_0p6_step19056_normal/zh/meta/eval-zh-454299.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-trans/outputs/stage3/20261113_092615/checkpoints/global_step_19056",
+          "cot_style": "full",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "no_cot_no_transcription_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/no-cot-no-transcription.wav",
+          "source": "output-no-cot-no-trans/eval-zh-454299.wav",
+          "sha256": "214d89f67e3f835eeeff22e440585d7d439555eeffa81f4acabcaf387c45f3c2",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot-no-trans/normal/infer_outputs/no_cot_no_trans_0p6_step19056_normal/zh/meta/eval-zh-454299.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot-no-trans/outputs/stage3/20261115_231559_432776/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "attributes_only_audio": {
+          "path": "history-ablation/zh/eval-zh-454299/attributes-only.wav",
+          "source": "output-attributes-only/eval-zh-454299.wav",
+          "sha256": "9481a6060bb0e0e7788460b1268edb4730ad101528019e3e997e667e52404587",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/attributes-only/normal/infer_outputs/attributes_only_0p6_step19056_normal/zh/meta/eval-zh-454299.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/attributes-only/outputs/stage3/20261116_203433_432816/checkpoints/global_step_19056",
+          "cot_style": "attributes",
+          "under_generated_tokens": 65,
+          "under_used_in_speech_context": true
         }
-      }
+      },
+      "history_playback_matches_model_ablation_gt_history": true,
+      "displayed_history_note": null
     },
     {
       "eval_id": "eval-zh-1036786",
@@ -112,8 +154,50 @@
           "path": "history-ablation/zh/eval-zh-1036786/mismatched-history.wav",
           "source": "output-mismatched-history/eval-zh-1036786.wav",
           "sha256": "379db3eba5dfaa3d835453f1a14d639ac5bc243815c2ac7d3ef035e10c5a9a2a"
+        },
+        "no_cot_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/no-cot.wav",
+          "source": "output-no-cot/eval-zh-1036786.wav",
+          "sha256": "a52e66d4f298367f8fce7fbf359e555fa7dbee0cfb5935fd620f98b2d45bae52",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot/normal/infer_outputs/no_cot_0p6_step19056_normal/zh/meta/eval-zh-1036786.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot/outputs/stage3/20261110_111947/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 28,
+          "under_used_in_speech_context": true
+        },
+        "no_transcription_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/no-transcription.wav",
+          "source": "output-no-trans/eval-zh-1036786.wav",
+          "sha256": "351aa07dfd25c0989964c23065ddcde3d1a9c31587d53606ea38f00c1eed666d",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-trans/normal/infer_outputs/no_trans_0p6_step19056_normal/zh/meta/eval-zh-1036786.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-trans/outputs/stage3/20261113_092615/checkpoints/global_step_19056",
+          "cot_style": "full",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "no_cot_no_transcription_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/no-cot-no-transcription.wav",
+          "source": "output-no-cot-no-trans/eval-zh-1036786.wav",
+          "sha256": "195e4ce1332666e5ea62d01c7c17a97e9af1cfaaa5df1bf9bbdf387fe7bf7c4d",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot-no-trans/normal/infer_outputs/no_cot_no_trans_0p6_step19056_normal/zh/meta/eval-zh-1036786.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot-no-trans/outputs/stage3/20261115_231559_432776/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "attributes_only_audio": {
+          "path": "history-ablation/zh/eval-zh-1036786/attributes-only.wav",
+          "source": "output-attributes-only/eval-zh-1036786.wav",
+          "sha256": "79187b51ac16404b85a95644b9da942130b6767a7e2fc5511402d7bcdda8e2c1",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/attributes-only/normal/infer_outputs/attributes_only_0p6_step19056_normal/zh/meta/eval-zh-1036786.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/attributes-only/outputs/stage3/20261116_203433_432816/checkpoints/global_step_19056",
+          "cot_style": "attributes",
+          "under_generated_tokens": 32,
+          "under_used_in_speech_context": true
         }
-      }
+      },
+      "history_playback_matches_model_ablation_gt_history": false,
+      "displayed_history_note": "The history player is a shortened excerpt. The four model-ablation outputs use the original full dialogue context."
     },
     {
       "eval_id": "eval-en-232498",
@@ -166,8 +250,50 @@
           "path": "history-ablation/en/eval-en-232498/mismatched-history.wav",
           "source": "output-mismatched-history/eval-en-232498.wav",
           "sha256": "5d257e4b91e9d03bd08d77c7f1fc71c4bb8dd9f82e692f6a1e1ed727aec5b0d6"
+        },
+        "no_cot_audio": {
+          "path": "history-ablation/en/eval-en-232498/no-cot.wav",
+          "source": "output-no-cot/eval-en-232498.wav",
+          "sha256": "40676fc076be38b37c01f2e06d7cdc9ea98adb177b512d511f97425a7b3a9e40",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot/normal/infer_outputs/no_cot_0p6_step19056_normal/en/meta/eval-en-232498.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot/outputs/stage3/20261110_111947/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 84,
+          "under_used_in_speech_context": true
+        },
+        "no_transcription_audio": {
+          "path": "history-ablation/en/eval-en-232498/no-transcription.wav",
+          "source": "output-no-trans/eval-en-232498.wav",
+          "sha256": "11e446adaf5efe8a7eed0c7295177d3fff5f5f23d4ae76a3dddef97061cba43e",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-trans/normal/infer_outputs/no_trans_0p6_step19056_normal/en/meta/eval-en-232498.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-trans/outputs/stage3/20261113_092615/checkpoints/global_step_19056",
+          "cot_style": "full",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "no_cot_no_transcription_audio": {
+          "path": "history-ablation/en/eval-en-232498/no-cot-no-transcription.wav",
+          "source": "output-no-cot-no-trans/eval-en-232498.wav",
+          "sha256": "9f0625f85a855c272dae689f5519f3b766d0d00280d8fdfe1f3b42ccd0347a6f",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot-no-trans/normal/infer_outputs/no_cot_no_trans_0p6_step19056_normal/en/meta/eval-en-232498.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot-no-trans/outputs/stage3/20261115_231559_432776/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "attributes_only_audio": {
+          "path": "history-ablation/en/eval-en-232498/attributes-only.wav",
+          "source": "output-attributes-only/eval-en-232498.wav",
+          "sha256": "e718b15eb6ca44c5a47c173cee3c054c3362814f10ef7918cd24d9950fa1771d",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/attributes-only/normal/infer_outputs/attributes_only_0p6_step19056_normal/en/meta/eval-en-232498.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/attributes-only/outputs/stage3/20261116_203433_432816/checkpoints/global_step_19056",
+          "cot_style": "attributes",
+          "under_generated_tokens": 86,
+          "under_used_in_speech_context": true
         }
-      }
+      },
+      "history_playback_matches_model_ablation_gt_history": true,
+      "displayed_history_note": null
     },
     {
       "eval_id": "eval-en-370534",
@@ -220,8 +346,80 @@
           "path": "history-ablation/en/eval-en-370534/mismatched-history.wav",
           "source": "output-mismatched-history/eval-en-370534.wav",
           "sha256": "69ed60115caf21b6b4f1e30dc72d8ec83a15a4c05479de77384be90667da94f4"
+        },
+        "no_cot_audio": {
+          "path": "history-ablation/en/eval-en-370534/no-cot.wav",
+          "source": "output-no-cot/eval-en-370534.wav",
+          "sha256": "0827842b7336eb75636d93faf573ad4dbddf0b89de5bc0a294671d4ab928757d",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot/normal/infer_outputs/no_cot_0p6_step19056_normal/en/meta/eval-en-370534.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot/outputs/stage3/20261110_111947/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 92,
+          "under_used_in_speech_context": true
+        },
+        "no_transcription_audio": {
+          "path": "history-ablation/en/eval-en-370534/no-transcription.wav",
+          "source": "output-no-trans/eval-en-370534.wav",
+          "sha256": "df926620e299de6af9a049b61273a57a29ef45b33f86c078e4d9d9b9b0c76bcc",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-trans/normal/infer_outputs/no_trans_0p6_step19056_normal/en/meta/eval-en-370534.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-trans/outputs/stage3/20261113_092615/checkpoints/global_step_19056",
+          "cot_style": "full",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "no_cot_no_transcription_audio": {
+          "path": "history-ablation/en/eval-en-370534/no-cot-no-transcription.wav",
+          "source": "output-no-cot-no-trans/eval-en-370534.wav",
+          "sha256": "c917187401d53e5eeef9c4a2017df3a3e65b234d32e8d7ad078774db8a6181fd",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/no-cot-no-trans/normal/infer_outputs/no_cot_no_trans_0p6_step19056_normal/en/meta/eval-en-370534.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot-no-trans/outputs/stage3/20261115_231559_432776/checkpoints/global_step_19056",
+          "cot_style": "none",
+          "under_generated_tokens": 0,
+          "under_used_in_speech_context": false
+        },
+        "attributes_only_audio": {
+          "path": "history-ablation/en/eval-en-370534/attributes-only.wav",
+          "source": "output-attributes-only/eval-en-370534.wav",
+          "sha256": "6b1d3c8e180127215cec832e812533f8efd25773fdcf99a20f8d17cbd9d79128",
+          "inference_metadata": "/aifs4su/weizhenbian/code/VeOmni/补实验/normal-eval/results/attributes-only/normal/infer_outputs/attributes_only_0p6_step19056_normal/en/meta/eval-en-370534.json",
+          "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/attributes-only/outputs/stage3/20261116_203433_432816/checkpoints/global_step_19056",
+          "cot_style": "attributes",
+          "under_generated_tokens": 92,
+          "under_used_in_speech_context": true
         }
-      }
+      },
+      "history_playback_matches_model_ablation_gt_history": true,
+      "displayed_history_note": null
     }
-  ]
+  ],
+  "component_ablation_source_directory": "/aifs4su/weizhenbian/code/VeOmni/eval-website/abandon",
+  "component_ablation_models": {
+    "no_cot_audio": {
+      "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot/outputs/stage3/20261110_111947/checkpoints/global_step_19056",
+      "generate_under": true,
+      "cot_style": "none"
+    },
+    "no_transcription_audio": {
+      "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-trans/outputs/stage3/20261113_092615/checkpoints/global_step_19056",
+      "generate_under": false,
+      "cot_style": "full"
+    },
+    "no_cot_no_transcription_audio": {
+      "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/no-cot-no-trans/outputs/stage3/20261115_231559_432776/checkpoints/global_step_19056",
+      "generate_under": false,
+      "cot_style": "none"
+    },
+    "attributes_only_audio": {
+      "checkpoint_path": "/aifs4su/weizhenbian/code/VeOmni/补实验/attributes-only/outputs/stage3/20261116_203433_432816/checkpoints/global_step_19056",
+      "generate_under": true,
+      "cot_style": "attributes"
+    }
+  },
+  "audio_counts": {
+    "cases": 4,
+    "inputs": 8,
+    "outputs": 28,
+    "total": 36,
+    "added_component_ablation_outputs": 16
+  }
 }

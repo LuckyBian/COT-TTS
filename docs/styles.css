@@ -1011,8 +1011,25 @@ h2 {
 }
 
 .history-condition-correct {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  align-items: center;
   border-color: var(--sage);
   background: rgba(125, 155, 123, 0.1);
+}
+
+.history-condition-correct p {
+  margin-bottom: 0;
+}
+
+.history-ablation-note {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .history-condition h4 {
@@ -1270,7 +1287,7 @@ audio {
 
 @media (max-width: 900px) {
   .history-ablation-outputs {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .neutral-language {
@@ -1363,6 +1380,11 @@ audio {
 }
 
 @media (max-width: 600px) {
+  .history-ablation-outputs,
+  .history-condition-correct {
+    grid-template-columns: 1fr;
+  }
+
   .history-ablation-case {
     padding: 1rem;
   }

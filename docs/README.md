@@ -50,17 +50,35 @@ index.html
 
 No backend or build step is required.
 
-## History Condition Comparison
+## Ablation Study
 
 Between the emotion showcase and the fixed neutral reference section,
 `history-ablation-demo-data.js` defines two Chinese and two English cases
 selected by the user. Each case includes its target text, reference audio,
-original historical audio, and outputs under correct, absent, and mismatched
-history. The reference and target text are kept fixed within each comparison.
-The original history player belongs to the correct-history condition only.
+historical audio, and seven output conditions:
 
-The 20 audio files in `history-ablation/` originate from `relaxed-15`; subsequent
-local audio edits are preserved. Mismatched donor IDs and current SHA256 values are recorded in
+- Full model
+- No history
+- Mismatched history
+- No CoT
+- No transcription (the generated history transcription / under component)
+- No CoT or transcription
+- Attributes only (the CoT section retains Emotion and acoustic attributes)
+
+The reference and target text are kept fixed within each comparison. The two
+history conditions change the input; the four added component ablations use
+separately trained 0.6B models. No inference is run by this static page.
+The original history player accompanies the full-model example. For
+`eval-zh-1036786`, the displayed history has been shortened manually, while
+the four model-ablation outputs use the original full GT history. This exception
+is stated next to the case and recorded in the asset manifest.
+
+The 20 existing audio files in `history-ablation/` originate from `relaxed-15`;
+subsequent local audio edits are preserved. Sixteen additional WAVs were copied
+from the corresponding `eval-website/abandon/output-no-cot`, `output-no-trans`,
+`output-no-cot-no-trans`, and `output-attributes-only` folders. Each of the four
+cases now has two input audio files and seven output audio files (36 WAVs total).
+Mismatched donor IDs, component-ablation checkpoints, and current SHA256 values are recorded in
 `history-ablation/manifest.json`. Selection follows the user's handwritten IDs and subsequent removals,
 not the full candidate pool. The source annotations are not uniformly strict:
 `eval-zh-1036786` and `eval-en-370534` have moderate reference style. The page

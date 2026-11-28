@@ -205,14 +205,14 @@
 
       <section class="neutral-card history-ablation-card" aria-labelledby="historyAblationTitle">
         <div class="neutral-heading">
-          <p class="eyebrow">The role of dialogue history</p>
-          <h2 id="historyAblationTitle">Same text and reference, different history conditions</h2>
+          <p class="eyebrow">Dialogue context and reasoning components</p>
+          <h2 id="historyAblationTitle">Ablation study</h2>
           <p>
-            For each case, the target text and reference audio stay the same.
-            Compare the output with the correct dialogue history, without
-            historical audio, and with an unrelated dialogue history. These
-            examples help reveal how historical context shapes emotional and
-            stylistic delivery beyond the cues in the text and reference.
+            Compare the full model with removed or mismatched dialogue history,
+            and with models trained without CoT, without history transcription,
+            without both, or with only emotion and acoustic attributes in CoT.
+            Each case keeps the target text and speaker reference fixed, so you
+            can listen to how these components shape the generated delivery.
           </p>
         </div>
         <div id="historyAblationDemos" class="history-ablation-groups"></div>
