@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 import sys
 import tempfile
 from dataclasses import asdict, dataclass
@@ -12,6 +11,13 @@ from types import SimpleNamespace
 import numpy as np
 import soundfile as sf
 import torch
+
+from generation_protocol import (
+    ProtocolError,
+    generate_analysis,
+    generated_tail,
+    speech_context,
+)
 
 
 INFER_ROOT = Path(__file__).resolve().parent
@@ -33,7 +39,7 @@ BEST_MODEL_SPECS = {
         "checkpoint_path": INFER_ROOT / "models" / "best_1p7",
         "hf_model_dir": INFER_ROOT / "models" / "best_1p7" / "hf_ckpt",
         "tokenizer_path": INFER_ROOT / "models" / "best_1p7" / "hf_ckpt",
-        "temperature": 0.6,
+        "temperature": 0.95,
         "top_p": 0.8,
         "audio_retries": 2,
     },
@@ -54,6 +60,8 @@ class InferResult:
     mode: str | None = None
     language: str | None = None
     command: list[str] | None = None
+    under_generated_tokens: int | None = None
+    under_used_in_speech_context: bool | None = None
 
 
 def model_spec(model_size: str) -> dict:
@@ -78,6 +86,8 @@ def make_infer_args(
     top_p: float,
     repetition_penalty: float,
     no_repeat_ngram_size: int,
+    under_max_new_tokens: int,
+    under_min_new_tokens: int,
     cot_max_new_tokens: int,
     cot_min_new_tokens: int,
     audio_max_new_tokens: int,
@@ -97,6 +107,8 @@ def make_infer_args(
         top_p=top_p,
         repetition_penalty=repetition_penalty,
         no_repeat_ngram_size=no_repeat_ngram_size,
+        under_max_new_tokens=under_max_new_tokens,
+        under_min_new_tokens=under_min_new_tokens,
         cot_max_new_tokens=cot_max_new_tokens,
         cot_min_new_tokens=cot_min_new_tokens,
         audio_max_new_tokens=audio_max_new_tokens,
@@ -171,112 +183,87 @@ def load_single_infer_runtime(
     }
 
 
-def sanitize_user_cot(cot_text: str) -> str:
-    demo_infer = _demo_infer_module()
-    return demo_infer.sanitize_cot_text(cot_text).strip()
+def generate_ids(runtime: dict, infer_args: SimpleNamespace, prefix: list[int], phase: str) -> list[int]:
+    demo_infer = runtime["demo_infer"]
+    end_marker = {"under": "<under_end>", "cot": "<cot_end>", "audio": "<audio_tar_end>"}[phase]
+    kwargs = demo_infer.generation_kwargs(
+        runtime["tokenizer"],
+        max_new_tokens=getattr(infer_args, f"{phase}_max_new_tokens"),
+        min_new_tokens=getattr(infer_args, f"{phase}_min_new_tokens"),
+        do_sample=infer_args.do_sample,
+        temperature=infer_args.temperature,
+        top_p=infer_args.top_p,
+        repetition_penalty=infer_args.repetition_penalty,
+        no_repeat_ngram_size=infer_args.no_repeat_ngram_size,
+        stop_tokens=[end_marker, "<output_end>", "<eos>"],
+    )
+    max_positions = getattr(runtime["model"].config, "max_position_embeddings", None)
+    if max_positions and len(prefix) + kwargs["max_new_tokens"] > max_positions:
+        raise ProtocolError(f"{phase}: input would exceed the model context length")
+    inputs = torch.tensor([prefix], dtype=torch.long, device=runtime["device"])
+    with torch.inference_mode():
+        output = runtime["model"].generate(
+            input_ids=inputs, attention_mask=torch.ones_like(inputs), **kwargs,
+        )
+    return output[0].detach().cpu().tolist()
 
 
-def generate_cot(
+def generate_conditioning(
     *,
     runtime: dict,
     infer_args: SimpleNamespace,
     history_audio_path: Path,
     reference_audio_path: Path,
     target_text: str,
-) -> str:
+) -> dict:
     demo_infer = runtime["demo_infer"]
     audio_tokenizer = runtime["audio_tokenizer"]
     tokenizer = runtime["tokenizer"]
-    model = runtime["model"]
     device = runtime["device"]
 
     history_tokens, _, _ = demo_infer.build_history_tokens(infer_args, audio_tokenizer, [history_audio_path])
     ref_global_ids = demo_infer.encode_audio_global(audio_tokenizer, reference_audio_path, infer_args.global_prefix_len)
-    if not ref_global_ids:
-        raise RuntimeError(f"Reference audio produced no global tokens: {reference_audio_path}")
+    if len(ref_global_ids) != infer_args.global_prefix_len:
+        raise RuntimeError(f"Reference audio must produce {infer_args.global_prefix_len} global tokens")
 
     user_prompt = demo_infer.build_user_prompt(
         text=target_text,
         history_tokens=history_tokens,
         ref_tokens=demo_infer.to_tokens(ref_global_ids, infer_args.global_prefix),
     )
-    cot_input_ids = demo_infer.build_input_ids(tokenizer, user_prompt, "<cot_start>", device)
-    cot_gen_text = demo_infer.generate_text(
-        model,
-        tokenizer,
-        cot_input_ids,
-        **demo_infer.generation_kwargs(
-            tokenizer,
-            max_new_tokens=infer_args.cot_max_new_tokens,
-            min_new_tokens=infer_args.cot_min_new_tokens,
-            do_sample=infer_args.do_sample,
-            temperature=infer_args.temperature,
-            top_p=infer_args.top_p,
-            repetition_penalty=infer_args.repetition_penalty,
-            no_repeat_ngram_size=infer_args.no_repeat_ngram_size,
-            stop_tokens=["<cot_end>", "<output_end>", "<eos>"],
-        ),
+    prompt_ids = demo_infer.build_input_ids(tokenizer, user_prompt, "", device)[0].detach().cpu().tolist()
+    encode = lambda text: tokenizer.encode(text, add_special_tokens=False)
+    analysis = generate_analysis(
+        prompt_ids,
+        lambda prefix, phase: generate_ids(runtime, infer_args, prefix, phase),
+        encode,
+        lambda ids: tokenizer.decode(ids, skip_special_tokens=False),
     )
-    cot_text = demo_infer.extract_between(cot_gen_text, "", "<cot_end>")
-    cot_text = sanitize_user_cot(cot_text)
-    if not cot_text:
-        raise RuntimeError("Model generated empty COT text.")
-    return cot_text
+    analysis["reference_global_ids"] = ref_global_ids
+    return analysis
 
 
 def generate_audio_from_cot(
     *,
     runtime: dict,
     infer_args: SimpleNamespace,
-    history_audio_path: Path,
-    reference_audio_path: Path,
-    target_text: str,
-    cot_text: str,
+    analysis: dict,
     output_wav_path: Path,
     global_source: str = "ref",
 ) -> Path:
     demo_infer = runtime["demo_infer"]
     audio_tokenizer = runtime["audio_tokenizer"]
     tokenizer = runtime["tokenizer"]
-    model = runtime["model"]
     device = runtime["device"]
-
-    history_tokens, _, _ = demo_infer.build_history_tokens(infer_args, audio_tokenizer, [history_audio_path])
-    ref_global_ids = demo_infer.encode_audio_global(audio_tokenizer, reference_audio_path, infer_args.global_prefix_len)
-    if not ref_global_ids:
-        raise RuntimeError(f"Reference audio produced no global tokens: {reference_audio_path}")
-
-    user_prompt = demo_infer.build_user_prompt(
-        text=target_text,
-        history_tokens=history_tokens,
-        ref_tokens=demo_infer.to_tokens(ref_global_ids, infer_args.global_prefix),
-    )
-    audio_input_ids = demo_infer.build_input_ids(
-        tokenizer,
-        user_prompt,
-        f"<cot_start>{sanitize_user_cot(cot_text)}<cot_end><audio_tar_start>",
-        device,
-    )
-    audio_gen_text = demo_infer.generate_text(
-        model,
-        tokenizer,
-        audio_input_ids,
-        **demo_infer.generation_kwargs(
-            tokenizer,
-            max_new_tokens=infer_args.audio_max_new_tokens,
-            min_new_tokens=infer_args.audio_min_new_tokens,
-            do_sample=infer_args.do_sample,
-            temperature=infer_args.temperature,
-            top_p=infer_args.top_p,
-            repetition_penalty=infer_args.repetition_penalty,
-            no_repeat_ngram_size=infer_args.no_repeat_ngram_size,
-            stop_tokens=["<audio_tar_end>", "<output_end>", "<eos>"],
-        ),
-    )
+    encode = lambda text: tokenizer.encode(text, add_special_tokens=False)
+    prefix = speech_context(analysis, encode)
+    audio_ids = generated_tail(prefix, generate_ids(runtime, infer_args, prefix, "audio"), "audio")
+    stop_ids = demo_infer.resolve_stop_token_ids(tokenizer, ["<audio_tar_end>", "<output_end>", "<eos>"])
+    if audio_ids[-1] not in stop_ids:
+        raise ProtocolError("audio: reached the token limit without a normal end token")
+    audio_gen_text = tokenizer.decode(audio_ids, skip_special_tokens=False)
     generated_global_ids, semantic_ids = demo_infer.parse_audio_ids(
-        audio_gen_text,
-        infer_args.global_prefix,
-        infer_args.semantic_prefix,
+        audio_gen_text, infer_args.global_prefix, infer_args.semantic_prefix,
     )
     if infer_args.max_semantic_tokens > 0 and len(semantic_ids) > infer_args.max_semantic_tokens:
         semantic_ids = semantic_ids[: infer_args.max_semantic_tokens]
@@ -286,13 +273,15 @@ def generate_audio_from_cot(
     if global_source == "generated" and generated_global_ids:
         global_ids = generated_global_ids
     else:
-        global_ids = ref_global_ids
+        global_ids = analysis["reference_global_ids"]
 
     wav = audio_tokenizer.detokenize(
         torch.tensor(global_ids, dtype=torch.long, device=device).unsqueeze(0),
         torch.tensor(semantic_ids, dtype=torch.long, device=device).unsqueeze(0),
     )
     wav = torch.as_tensor(wav).reshape(-1).detach().cpu().numpy()
+    if wav.size == 0 or not np.isfinite(wav).all():
+        raise RuntimeError("Audio decoder returned an empty or non-finite waveform")
     output_wav_path.parent.mkdir(parents=True, exist_ok=True)
     sf.write(str(output_wav_path), wav, samplerate=infer_args.sample_rate)
     return output_wav_path

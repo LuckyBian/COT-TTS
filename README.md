@@ -20,6 +20,7 @@ progressively.
 | Infer code | [https://github.com/LuckyBian/COT-TTS/tree/main/infer](https://github.com/LuckyBian/COT-TTS/tree/main/infer) |
 | Training code | [https://github.com/LuckyBian/COT-TTS/tree/main/train](https://github.com/LuckyBian/COT-TTS/tree/main/train) |
 | Challenge baseline | [https://github.com/iscslp2026-cot-tts/baseline](https://github.com/iscslp2026-cot-tts/baseline) |
+| Comparison baselines: models and LLM prompts | [baseline/README.md](baseline/README.md) |
 | Demo page | [https://luckybian.github.io/COT-TTS](https://luckybian.github.io/COT-TTS) |
 | COT-TTS paper | [https://arxiv.org/abs/2609.22697](https://arxiv.org/abs/2609.22697) |
 | Data processing pipeline | [https://github.com/LuckyBian/COT-TTS/tree/main/data%20construction](https://github.com/LuckyBian/COT-TTS/tree/main/data%20construction) |

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 from pathlib import Path
 
 from cot_tts_single_infer_common import (
@@ -9,7 +10,7 @@ from cot_tts_single_infer_common import (
     INFER_ROOT,
     InferResult,
     generate_audio_from_cot,
-    generate_cot,
+    generate_conditioning,
     load_single_infer_runtime,
     make_infer_args,
     model_spec,
@@ -37,6 +38,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--history-mode", choices=["full", "semantic", "full_first_then_semantic"], default="full")
     parser.add_argument("--torch-dtype", choices=["bfloat16", "float16", "float32"], default="bfloat16")
     parser.add_argument("--attn-implementation", type=str, default="sdpa")
+    parser.add_argument("--under-max-new-tokens", type=int, default=1024)
+    parser.add_argument("--under-min-new-tokens", type=int, default=1)
     parser.add_argument("--cot-max-new-tokens", type=int, default=800)
     parser.add_argument("--cot-min-new-tokens", type=int, default=32)
     parser.add_argument("--audio-max-new-tokens", type=int, default=1600)
@@ -95,6 +98,8 @@ def main() -> None:
             top_p=top_p,
             repetition_penalty=args.repetition_penalty,
             no_repeat_ngram_size=args.no_repeat_ngram_size,
+            under_max_new_tokens=args.under_max_new_tokens,
+            under_min_new_tokens=args.under_min_new_tokens,
             cot_max_new_tokens=args.cot_max_new_tokens,
             cot_min_new_tokens=args.cot_min_new_tokens,
             audio_max_new_tokens=args.audio_max_new_tokens,
@@ -103,19 +108,19 @@ def main() -> None:
             sample_rate=args.sample_rate,
         )
 
-        stage = "generate_cot"
+        stage = "generate_under_and_cot"
         cot_error = None
-        cot_text = ""
+        analysis = None
         for _ in range(max(1, args.cot_retries)):
             try:
-                cot_text = generate_cot(
+                analysis = generate_conditioning(
                     runtime=runtime,
                     infer_args=infer_args,
                     history_audio_path=history_16k,
                     reference_audio_path=reference_16k,
                     target_text=target_text,
                 )
-                generated_cot_dst.write_text(cot_text + "\n", encoding="utf-8")
+                generated_cot_dst.write_text(analysis["generated_cot_text"] + "\n", encoding="utf-8")
                 cot_error = None
                 break
             except Exception as exc:
@@ -130,10 +135,7 @@ def main() -> None:
                 generate_audio_from_cot(
                     runtime=runtime,
                     infer_args=infer_args,
-                    history_audio_path=history_16k,
-                    reference_audio_path=reference_16k,
-                    target_text=target_text,
-                    cot_text=cot_text,
+                    analysis=analysis,
                     output_wav_path=generated_wav_dst,
                     global_source=args.global_source,
                 )
@@ -156,6 +158,8 @@ def main() -> None:
                     f"attn_implementation={args.attn_implementation}",
                     f"temperature={temperature}",
                     f"top_p={top_p}",
+                    f"under_generated_tokens={len(analysis['under_generated_ids'])}",
+                    "under_used_in_speech_context=True",
                 ]
             )
             + "\n",
@@ -173,6 +177,8 @@ def main() -> None:
             run_log_path=str(run_log_path),
             mode="normal",
             language=args.language,
+            under_generated_tokens=len(analysis["under_generated_ids"]),
+            under_used_in_speech_context=True,
         )
         write_result_manifest(manifest_path, result)
         print(f"[done] model={args.model_size}")
@@ -191,6 +197,7 @@ def main() -> None:
             manifest_name=manifest_path.name,
         )
         print(f"[skip] failed at stage={stage}: {exc}")
+        raise SystemExit(1)
     finally:
         if runtime_audio_dir is not None and Path(runtime_audio_dir).exists():
             shutil.rmtree(runtime_audio_dir, ignore_errors=True)
